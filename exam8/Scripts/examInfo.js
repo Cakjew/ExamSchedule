@@ -419,7 +419,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadPaperInfo();
 
     function updatePaperCountPanelPosition() {
-        const pos = getCookie("paperCountPosition") || "right-bottom";
+        const pos = getCookie("paperCountPosition") || "left-info";
         const panel = document.getElementById("paper-count-panel");
         const leftInfo = document.getElementById("paper-info");
         const rightColumn = document.querySelector(".right-column");
@@ -428,7 +428,7 @@ document.addEventListener("DOMContentLoaded", () => {
             leftInfo.appendChild(panel);
             panel.style.position = "static";
             panel.style.marginTop = "16px";
-        } else if (pos === "right-bottom" && rightColumn) {
+        } else if (pos === "left-info" && rightColumn) {
             rightColumn.appendChild(panel);
             panel.style.position = "";
             panel.style.marginTop = "32px";

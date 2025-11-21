@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentTheme = getCookie("currentTheme") || "ealg";
     let theme = getCookie("theme") || "dark";
     let isAutoToggle = getCookie("autoToggle") || false;
-    let paperCountPosition = getCookie("paperCountPosition") || "right-bottom";
+    let paperCountPosition = getCookie("paperCountPosition") || "left-info";
     let themeConfig = [];
 
     // 新增：检测url参数

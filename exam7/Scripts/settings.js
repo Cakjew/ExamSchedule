@@ -76,11 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
         themeLink.href = `Styles/${themePath}/${isDark ? 'dark' : 'light'}.css`;
     }
 
-    // 初始化下拉框
-    if (paperCountPositionSelect) {
-        paperCountPositionSelect.value = paperCountPosition;
-    }
-
     settingsBtn.addEventListener("click", () => {
         try {
             offsetTimeInput.value = offsetTime;
@@ -113,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
             theme = themeToggle.checked ? "light" : "dark";
             currentTheme = themeSelect.value;
             isAutoToggle = autoToggle.checked;
-            paperCountPosition = paperCountPositionSelect.value;
+
             setCookie("offsetTime", offsetTime, 365);
             setCookie("room", room, 365);
             setCookie("zoomLevel", zoomLevel, 365);
@@ -223,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 theme = themeToggle.checked ? "light" : "dark";
                 currentTheme = themeSelect.value;
                 isAutoToggle = autoToggle.checked;
-                paperCountPosition = paperCountPositionSelect.value;
+    
                 setCookie("offsetTime", offsetTime, 365);
                 setCookie("room", room, 365);
                 setCookie("zoomLevel", zoomLevel, 365);
@@ -251,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (paperCountPositionSelect) {
         paperCountPositionSelect.addEventListener("change", () => {
-            paperCountPosition = paperCountPositionSelect.value;
+
             setCookie("paperCountPosition", paperCountPosition, 365);
             window.dispatchEvent(new Event("paperCountPositionChanged"));
         });

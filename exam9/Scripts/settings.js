@@ -76,11 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
         themeLink.href = `Styles/${themePath}/${isDark ? 'dark' : 'light'}.css`;
     }
 
-    // 初始化下拉框
-    if (paperCountPositionSelect) {
-        paperCountPositionSelect.value = paperCountPosition;
-    }
-
+   
     settingsBtn.addEventListener("click", () => {
         try {
             offsetTimeInput.value = offsetTime;

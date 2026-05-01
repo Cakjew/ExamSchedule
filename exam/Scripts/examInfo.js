@@ -63,10 +63,20 @@ document.addEventListener("DOMContentLoaded", () => {
                         setCookie("examReminders", encodeURIComponent(JSON.stringify(data.examReminders)), 365);
                     }
                     displayExamInfo(data);
-                    updateCurrentTime();
-                    updateExamInfo(data);
-                    setInterval(() => updateCurrentTime(), 1000);
-                    setInterval(() => updateExamInfo(data), 1000);
+                    // 等待 NTP 初始化，失败则回退到系统时间
+                    if (window.NTP && typeof window.NTP.init === 'function') {
+                        window.NTP.init().finally(() => {
+                            updateCurrentTime();
+                            updateExamInfo(data);
+                            setInterval(() => updateCurrentTime(), 1000);
+                            setInterval(() => updateExamInfo(data), 1000);
+                        });
+                    } else {
+                        updateCurrentTime();
+                        updateExamInfo(data);
+                        setInterval(() => updateCurrentTime(), 1000);
+                        setInterval(() => updateExamInfo(data), 1000);
+                    }
                 })
                 .catch(error => errorSystem.show('获取考试数据失败: ' + error.message));
         }
@@ -82,10 +92,19 @@ document.addEventListener("DOMContentLoaded", () => {
                     setCookie("examReminders", encodeURIComponent(JSON.stringify(data.examReminders)), 365);
                 }
                 displayExamInfo(data);
-                updateCurrentTime();
-                updateExamInfo(data);
-                setInterval(() => updateCurrentTime(), 1000);
-                setInterval(() => updateExamInfo(data), 1000);
+                if (window.NTP && typeof window.NTP.init === 'function') {
+                    window.NTP.init().finally(() => {
+                        updateCurrentTime();
+                        updateExamInfo(data);
+                        setInterval(() => updateCurrentTime(), 1000);
+                        setInterval(() => updateExamInfo(data), 1000);
+                    });
+                } else {
+                    updateCurrentTime();
+                    updateExamInfo(data);
+                    setInterval(() => updateCurrentTime(), 1000);
+                    setInterval(() => updateExamInfo(data), 1000);
+                }
                 return Promise.resolve();
             } catch (error) {
                 localStorage.removeItem('localExamConfig');
@@ -103,10 +122,19 @@ document.addEventListener("DOMContentLoaded", () => {
                     setCookie("examReminders", encodeURIComponent(JSON.stringify(data.examReminders)), 365);
                 }
                 displayExamInfo(data);
-                updateCurrentTime();
-                updateExamInfo(data);
-                setInterval(() => updateCurrentTime(), 1000);
-                setInterval(() => updateExamInfo(data), 1000);
+                if (window.NTP && typeof window.NTP.init === 'function') {
+                    window.NTP.init().finally(() => {
+                        updateCurrentTime();
+                        updateExamInfo(data);
+                        setInterval(() => updateCurrentTime(), 1000);
+                        setInterval(() => updateExamInfo(data), 1000);
+                    });
+                } else {
+                    updateCurrentTime();
+                    updateExamInfo(data);
+                    setInterval(() => updateCurrentTime(), 1000);
+                    setInterval(() => updateExamInfo(data), 1000);
+                }
             })
             .catch(error => errorSystem.show('获取考试数据失败: ' + error.message));
     }
@@ -124,7 +152,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateCurrentTime() {
         try {
-            const now = new Date(new Date().getTime() + offsetTime * 1000);
+            const baseMs = (window.NTP && typeof window.NTP.nowMs === 'function') ? window.NTP.nowMs() : Date.now();
+            const now = new Date(baseMs + offsetTime * 1000);
             currentTimeElem.textContent = now.toLocaleTimeString('zh-CN', { hour12: false });
         } catch (e) {
             errorSystem.show('更新时间失败: ' + e.message);
@@ -133,7 +162,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateExamInfo(data) {
         try {
-            const now = new Date(new Date().getTime() + offsetTime * 1000);
+            const baseMs = (window.NTP && typeof window.NTP.nowMs === 'function') ? window.NTP.nowMs() : Date.now();
+            const now = new Date(baseMs + offsetTime * 1000);
             let currentExam = null;
             let nextExam = null;
             let lastExam = null;
@@ -314,7 +344,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 exams.forEach(exam => {
                     const start = new Date(exam.start);
                     const end = new Date(exam.end);
-                    const now = new Date(new Date().getTime() + offsetTime * 1000);
+                    const baseMs = (window.NTP && typeof window.NTP.nowMs === 'function') ? window.NTP.nowMs() : Date.now();
+                    const now = new Date(baseMs + offsetTime * 1000);
 
                     let status = "未开始";
                     if (now < start) {

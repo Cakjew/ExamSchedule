@@ -60,6 +60,7 @@
 		</div>
 	</div>
 
+	<script src="../exam/Scripts/ntp.js"></script>
 	<script>
 		// 返回上级目录的函数
 		function goBack() {
@@ -67,7 +68,8 @@
 		}
 
 		setInterval(() => {
-			const date = new Date();
+			const baseMs = (window.NTP && typeof window.NTP.nowMs === 'function') ? window.NTP.nowMs() : Date.now();
+			const date = new Date(baseMs);
 			const time = date.toLocaleTimeString('zh-CN', {
 				hour12: false
 			});

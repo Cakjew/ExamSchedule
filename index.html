@@ -286,9 +286,11 @@
         </div>
     </div>
 
+    <script src="exam/Scripts/ntp.js"></script>
     <script>
         function checkAprilFools() {
-            const today = new Date();
+            const baseMs = (window.NTP && typeof window.NTP.nowMs === 'function') ? window.NTP.nowMs() : Date.now();
+            const today = new Date(baseMs);
             if (today.getMonth() === 3 && today.getDate() === 1) {
                 if (Math.random() <= 0.75) {
                     window.location.href = 'https://www.bilibili.com/video/BV1GJ411x7h7/';

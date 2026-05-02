@@ -10,7 +10,7 @@
         serverRaw: null,
         async init() {
             if (NTP.ready) return NTP.ready;
-            console.debug('NTP: init() called');
+            console.debug('TimeAPI: init() called');
             NTP.ready = (async () => {
                 try {
                     const resp = await fetch(TIME_API, { cache: 'no-store' });
@@ -51,10 +51,10 @@
                     if (el) {
                         if (NTP.status === 'ok') {
                             const t = new Date(Date.now() + NTP.offset).toLocaleTimeString('zh-CN', { hour12: false });
-                            el.textContent = `NTP: OK ${t}`;
+                            el.textContent = `TimeAPI: OK ${t}`;
                             el.style.color = '#5ba838';
                         } else {
-                            el.textContent = `NTP: ERR`;
+                            el.textContent = `TimeAPI: ERR`;
                             el.style.color = 'red';
                         }
                     }

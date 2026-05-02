@@ -24,6 +24,7 @@
 <html lang="zh-CN">
 
 <head>
+	
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>当前时间</title>
@@ -34,10 +35,13 @@
 </head>
 
 <body>
+	
 	<button id="return-btn" onclick="goBack()">返回</button> <!-- 新增返回按钮 -->
+
 	<div class="container">
 		<div class="text">当前时间：</div>
 		<div class="time" id="time"></div>
+
 		<div class="controls">
 			<select id="fontSelector" class="btn" onchange="changeFontFamily()">
 				<option value="Roboto">Roboto（在线）</option>
@@ -57,7 +61,9 @@
 			<button class="btn" onclick="changeFontSize(-5)">减小字号</button>
 			<button class="btn" onclick="changeFontSize(5)">增大字号</button>
 			<button class="btn fullscreen" onclick="toggleFullScreen()">全屏/还原</button>
+			
 		</div>
+				<span id="ntp-status" style="margin-left:12px; font-size:13px; color:#999">TimeAPI: init</span>
 	</div>
 
 	<script src="../exam/Scripts/ntp.js"></script>

@@ -65,7 +65,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     displayExamInfo(data);
                     // 等待 NTP 初始化，失败则回退到系统时间
                     if (window.NTP && typeof window.NTP.init === 'function') {
-                        window.NTP.init().finally(() => {
+                        window.NTP.init().then(() => {
+                            updateCurrentTime();
+                            updateExamInfo(data);
+                            setInterval(() => updateCurrentTime(), 1000);
+                            setInterval(() => updateExamInfo(data), 1000);
+                        }).catch(() => {
                             updateCurrentTime();
                             updateExamInfo(data);
                             setInterval(() => updateCurrentTime(), 1000);
@@ -93,7 +98,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 displayExamInfo(data);
                 if (window.NTP && typeof window.NTP.init === 'function') {
-                    window.NTP.init().finally(() => {
+                    window.NTP.init().then(() => {
+                        updateCurrentTime();
+                        updateExamInfo(data);
+                        setInterval(() => updateCurrentTime(), 1000);
+                        setInterval(() => updateExamInfo(data), 1000);
+                    }).catch(() => {
                         updateCurrentTime();
                         updateExamInfo(data);
                         setInterval(() => updateCurrentTime(), 1000);
@@ -123,7 +133,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 displayExamInfo(data);
                 if (window.NTP && typeof window.NTP.init === 'function') {
-                    window.NTP.init().finally(() => {
+                    window.NTP.init().then(() => {
+                        updateCurrentTime();
+                        updateExamInfo(data);
+                        setInterval(() => updateCurrentTime(), 1000);
+                        setInterval(() => updateExamInfo(data), 1000);
+                    }).catch(() => {
                         updateCurrentTime();
                         updateExamInfo(data);
                         setInterval(() => updateCurrentTime(), 1000);

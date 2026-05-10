@@ -301,22 +301,6 @@
         }
         window.onload = function() {
             checkAprilFools();
-            // 公告弹窗逻辑
-            fetch('./announcement.json')
-                .then(res => {
-                    if (!res.ok) throw new Error('No announcement');
-                    return res.json();
-                })
-                .then(data => {
-                    if (data && data.show && data.content) {
-                        document.getElementById('announcement-content').innerHTML = data.content;
-                        document.getElementById('announcement-modal').style.display = 'flex';
-                    }
-                })
-                .catch(() => {});
-            document.getElementById('announcement-close').onclick = function() {
-                document.getElementById('announcement-modal').style.display = 'none';
-            };
         };
     </script>
 </body>

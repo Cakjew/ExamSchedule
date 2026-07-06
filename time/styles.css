@@ -1,107 +1,132 @@
 /* 基础样式 */
+:root {
+    color-scheme: dark;
+    --accent: #3b82f6;
+    --accent-strong: #2563eb;
+    --surface: rgba(20, 24, 31, 0.74);
+    --text: #f5f7fb;
+    --muted: #a3b0c2;
+}
+
 body {
-    font-family: 'Roboto', 'HarmonyOS Sans SC', sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'HarmonyOS Sans SC', sans-serif;
     margin: 0;
     padding: 20px;
-    background: #121212;
-    color: #e3f2fd;
+    background: linear-gradient(135deg, rgba(59,130,246,0.18), transparent 38%), linear-gradient(320deg, rgba(8,15,24,0.98), rgba(14,20,29,0.96));
+    color: var(--text);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at top left, rgba(59,130,246,0.16), transparent 30%);
+    pointer-events: none;
 }
 
 .container {
     text-align: center;
-    background: #1e1e1e;
-    padding: 48px;
-    border-radius: 24px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.32);
+    background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 48px 56px;
+    border-radius: 28px;
+    box-shadow: 0 18px 45px rgba(0,0,0,0.24);
+    backdrop-filter: blur(18px);
     animation: fadeIn 0.3s ease-in-out;
+    max-width: 92vw;
+    width: min(900px, 92vw);
+    margin: 0 auto;
 }
 
 .time {
-    font-size: 160px;
+    font-size: 190px;
     margin: 0;
-    color: #90caf9;
-    font-weight: 400;
-    text-shadow: 0 2px 8px rgba(25, 118, 210, 0.10);
+    color: #ffffff;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-shadow: 0 8px 24px rgba(0,0,0,0.25);
 }
 
 .text {
-    font-size: 1.8rem;
-    margin-bottom: 32px;
-    color: #e3f2fd;
+    font-size: 2rem;
+    margin-bottom: 24px;
+    color: var(--text);
+    font-weight: 600;
 }
 
 .controls {
-    margin-top: 40px;
+    margin-top: 34px;
     display: flex;
-    gap: 12px;
+    gap: 14px;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
 }
 
 .btn,
 #fontSelector {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 20px;
+    padding: 10px 16px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px;
     cursor: pointer;
-    transition: all 0.2s cubic-bezier(.4,0,.2,1);
-    font-size: 1rem;
-    font-weight: 500;
-    background-color: #232a34;
-    color: #e3f2fd;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.32);
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+    font-weight: 600;
+    background: rgba(255,255,255,0.08);
+    color: var(--text);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
 .btn:hover,
 #fontSelector:hover {
-    background-color: #1976d2;
+    background: rgba(59,130,246,0.2);
     color: #fff;
-    transform: translateY(-1px) scale(1.03);
-    box-shadow: 0 2px 6px rgba(25, 118, 210, 0.18);
+    transform: translateY(-1px);
+    border-color: rgba(59,130,246,0.35);
 }
 
 #fontSelector {
-    padding: 10px 20px;
+    padding: 10px 14px;
 }
 
 .btn.fullscreen {
-    background-color: #1976d2;
+    background: var(--accent);
     color: #fff;
 }
 
 .btn.fullscreen:hover {
-    background-color: #1565c0;
+    background: var(--accent-strong);
 }
 
-/* 返回按钮样式 */
 #return-btn {
-    position: absolute; /* 绝对定位 */
-    top: 20px; /* 距离顶部 20px */
-    left: 20px; /* 距离左侧 20px */
-    padding: 12px 24px; /* 内边距 */
-    font-size: 1rem; /* 字体大小 */
-    cursor: pointer; /* 鼠标悬停时显示为手型 */
-    background-color: #232a34; /* 按钮背景颜色 */
-    color: #e3f2fd; /* 按钮文字颜色 */
-    border: 1px solid #1976d2; /* 按钮边框样式 */
-    border-radius: 20px; /* 按钮圆角大小 */
-    box-shadow: 0 1px 3px rgba(0,0,0,0.32); /* 按钮阴影 */
-    transition: all 0.2s cubic-bezier(.4,0,.2,1); /* 背景颜色和缩放的过渡效果 */
-    z-index: 1001; /* 按钮层级 */
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 16px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    background: rgba(255,255,255,0.08);
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    transition: all 0.2s ease;
+    z-index: 1001;
+    backdrop-filter: blur(12px);
 }
 
 #return-btn:hover {
-    background-color: #1976d2; /* 悬停时的背景颜色 */
+    background: rgba(59,130,246,0.2);
     color: #fff;
-    transform: translateY(-1px) scale(1.03); /* 悬停时向上移动 1px */
-    box-shadow: 0 2px 6px rgba(25, 118, 210, 0.18); /* 悬停时的阴影效果 */
+    transform: translateY(-1px);
+    border-color: rgba(59,130,246,0.35);
 }
 
-/* 简化动画效果 */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -116,20 +141,26 @@ body {
 .font-size-control {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
 }
 
 #fontSizeInput {
-    width: 70px;
+    width: 78px;
     text-align: center;
-    padding: 12px 8px;
-    background: #181c1f;
-    color: #90caf9;
-    border: 1px solid #232a34;
+    padding: 10px 8px;
+    background: rgba(255,255,255,0.06);
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.12);
     border-radius: 12px;
 }
 
 .unit {
-    color: #90caf9;
+    color: var(--muted);
     font-size: 0.9rem;
+}
+
+#ntp-status {
+    color: var(--muted);
+    margin-left: 12px;
+    font-size: 13px;
 }

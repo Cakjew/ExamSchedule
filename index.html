@@ -11,16 +11,35 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <style>
+        :root {
+            color-scheme: dark;
+            --accent: #3b82f6;
+            --accent-strong: #2563eb;
+            --surface: rgba(20, 24, 31, 0.74);
+            --surface-strong: rgba(255, 255, 255, 0.08);
+            --text: #f5f7fb;
+            --muted: #a3b0c2;
+        }
+
         body {
-            background: #121212;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), transparent 40%), linear-gradient(320deg, rgba(8, 15, 24, 0.98), rgba(14, 20, 29, 0.96));
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            font-family: 'Google Sans', 'Roboto', sans-serif;
-            color: #e3f2fd;
-            backdrop-filter: blur(10px);
+            font-family: 'Segoe UI', 'Google Sans', 'Roboto', sans-serif;
+            color: var(--text);
+            backdrop-filter: blur(12px);
+            overflow: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 32%);
+            pointer-events: none;
         }
 
         h1 {
@@ -36,40 +55,44 @@
             gap: 24px;
             animation: fadeInUp 1s ease-in-out;
             width: 100%;
-            max-width: 800px;
+            max-width: 860px;
+            flex-wrap: wrap;
         }
 
         ul a {
-            color: #e3f2fd;
+            color: var(--text);
             text-decoration: none;
             font-size: 20px;
-            font-weight: 500;
-            padding: 32px;
-            border-radius: 20px;
-            background-color: #1e1e1e;
-            transition: all 0.3s cubic-bezier(.4, 0, .2, 1);
+            font-weight: 600;
+            padding: 28px 24px;
+            border-radius: 24px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04));
+            border: 1px solid rgba(255,255,255,0.12);
+            transition: all 0.25s cubic-bezier(.4, 0, .2, 1);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 16px;
-            min-width: 200px;
+            gap: 14px;
+            min-width: 220px;
             text-align: center;
-            min-height: 140px;
+            min-height: 150px;
             flex: 1;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.24);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
+            backdrop-filter: blur(18px);
         }
 
         ul a:hover {
-            background-color: #232a34;
-            transform: translateY(-4px) scale(1.03);
-            box-shadow: 0 8px 24px rgba(25, 118, 210, 0.18);
-            color: #90caf9;
+            background: linear-gradient(145deg, rgba(59,130,246,0.2), rgba(255,255,255,0.06));
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 22px 46px rgba(59, 130, 246, 0.18);
+            color: #dfeeff;
+            border-color: rgba(59, 130, 246, 0.35);
         }
 
         ul .material-icons,
         ul .material-symbols-outlined {
             font-size: 32px;
-            color: #90caf9;
+            color: #8ec5ff;
         }
 
         @keyframes fadeInUp {
@@ -90,34 +113,35 @@
             width: 100%;
             text-align: center;
             font-size: 14px;
-            color: #90caf9;
+            color: #8ec5ff;
             animation: fadeInUp 1s ease-in-out;
         }
 
         .github-link {
             position: static;
-            background-color: #232a34;
+            background: rgba(255,255,255,0.08);
             padding: 8px 16px;
-            border-radius: 100px;
+            border-radius: 999px;
             display: flex;
             align-items: center;
             gap: 6px;
-            color: #e3f2fd;
+            color: var(--text);
             font-size: 14px;
             text-decoration: none;
-            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+            transition: all 0.2s ease;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+            border: 1px solid rgba(255,255,255,0.12);
         }
 
         .github-link:hover {
-            background-color: #1976d2;
+            background: rgba(59,130,246,0.2);
             color: #fff;
-            box-shadow: 0 4px 16px rgba(25, 118, 210, 0.18);
+            box-shadow: 0 12px 28px rgba(59, 130, 246, 0.18);
         }
 
         .github-link .material-symbols-outlined {
             font-size: 18px;
-            color: #90caf9;
+            color: #8ec5ff;
             transition: color 0.2s;
         }
 
@@ -131,16 +155,18 @@
             left: 50%;
             transform: translateX(-50%);
             font-size: 24px;
-            font-weight: 500;
-            color: #e3f2fd;
+            font-weight: 600;
+            color: var(--text);
             animation: fadeInUp 1s ease-in-out;
             display: flex;
             align-items: center;
             gap: 12px;
-            background: rgba(18, 18, 18, 0.85);
-            border-radius: 16px;
-            padding: 8px 24px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.24);
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 999px;
+            padding: 10px 20px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(16px);
         }
 
         .project-logo {
@@ -166,10 +192,10 @@
         .about-link {
             background-color: transparent;
             padding: 8px 16px;
-            border-radius: 100px;
+            border-radius: 999px;
             font-size: 14px;
             text-decoration: none;
-            color: #e3f2fd;
+            color: var(--text);
             display: flex;
             align-items: center;
             gap: 6px;
@@ -177,78 +203,135 @@
         }
 
         .about-link:hover {
-            background-color: #232a34;
-            color: #90caf9;
+            background-color: rgba(255,255,255,0.08);
+            color: #8ec5ff;
         }
 
         .about-link .material-icons,
         .about-link .material-symbols-outlined {
             font-size: 18px;
-            color: #90caf9;
+            color: #8ec5ff;
         }
 
         .subtitle {
             font-size: 14px;
-            color: #90caf9;
+            color: var(--muted);
             margin-top: 4px;
             width: 100%;
             text-align: center;
         }
 
-        /* 公告弹窗样式 */
         #announcement-modal {
             display: none;
             position: fixed;
             z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(18, 18, 18, 0.75);
+            inset: 0;
+            background: rgba(6, 10, 17, 0.45);
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(10px);
         }
 
-        #announcement-modal > div {
-            background: #232a34;
-            color: #e3f2fd;
-            border-radius: 16px;
+        #announcement-modal.show {
+            display: flex;
+            animation: fadeInOverlay 0.35s ease both;
+        }
+
+        #announcement-modal.closing {
+            animation: fadeOutOverlay 0.25s ease both;
+        }
+
+        #announcement-modal .announcement-card {
+            background: #111827;
+            color: var(--text);
+            border-radius: 24px;
             max-width: 90vw;
             min-width: 320px;
-            box-shadow: 0 4px 24px rgba(25, 118, 210, 0.18);
-            padding: 32px 24px 16px 24px;
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 22px 48px rgba(0, 0, 0, 0.24);
+            padding: 28px 24px 18px 24px;
             position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
+            animation: popUp 0.35s cubic-bezier(0.2, 0, 0, 1.0) both;
+            transform-origin: center bottom;
         }
 
-        #announcement-modal h2 {
+        #announcement-modal .announcement-card > span {
             font-size: 22px;
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 12px;
-            color: #90caf9;
+            color: #8ec5ff;
         }
 
-        #announcement-modal p {
+        #announcement-modal .announcement-card #announcement-content {
             font-size: 16px;
             margin-bottom: 24px;
             text-align: center;
+            line-height: 1.6;
+            opacity: 0.96;
         }
 
-        #announcement-close {
-            background: #1976d2;
+        #announcement-modal .announcement-card button {
+            background: var(--accent);
             color: #fff;
             border: none;
-            border-radius: 8px;
-            padding: 8px 24px;
+            border-radius: 999px;
+            padding: 10px 24px;
             font-size: 15px;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.2s;
         }
 
-        #announcement-close:hover {
-            background: #155a8a;
+        #announcement-modal .announcement-card button:hover {
+            background: var(--accent-strong);
+            transform: translateY(-1px);
+        }
+
+        @keyframes fadeInOverlay {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOutOverlay {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+
+        @keyframes popUp {
+            from {
+                transform: translateY(16px) scale(0.98);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes popDown {
+            from {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(16px) scale(0.96);
+                opacity: 0;
+            }
+        }
+
+        #announcement-modal.closing .announcement-card {
+            animation: popDown 0.25s ease both;
         }
     </style>
 </head>
@@ -280,15 +363,52 @@
     
 
     <!-- 公告弹窗 -->
-    <div id="announcement-modal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(18,18,18,0.75); justify-content:center; align-items:center;">
-        <div style="background:#232a34; color:#e3f2fd; border-radius:16px; max-width:90vw; min-width:320px; box-shadow:0 4px 24px rgba(25,118,210,0.18); padding:32px 24px 16px 24px; position:relative; display:flex; flex-direction:column; align-items:center;">
-            <span style="font-size:22px; font-weight:500; margin-bottom:12px; color:#90caf9;">公告</span>
-            <div id="announcement-content" style="font-size:16px; margin-bottom:24px; text-align:center;"></div>
-            <button id="announcement-close" style="background:#1976d2; color:#fff; border:none; border-radius:8px; padding:8px 24px; font-size:15px; cursor:pointer; transition:background 0.2s;">关闭</button>
+    <div id="announcement-modal">
+        <div class="announcement-card">
+            <span>公告</span>
+            <div id="announcement-content"></div>
+            <button id="announcement-close">关闭</button>
         </div>
     </div>
 
     <script src="exam/Scripts/ntp.js"></script>
+    <script>
+        const announcementModal = document.getElementById('announcement-modal');
+        const announcementClose = document.getElementById('announcement-close');
+
+        function showAnnouncement() {
+            announcementModal.classList.remove('closing');
+            announcementModal.classList.add('show');
+        }
+
+        function hideAnnouncement() {
+            announcementModal.classList.add('closing');
+            announcementModal.classList.remove('show');
+            announcementModal.addEventListener('animationend', function handleClose() {
+                announcementModal.classList.remove('closing');
+                announcementModal.style.display = 'none';
+                announcementModal.removeEventListener('animationend', handleClose);
+            });
+        }
+
+        // 公告弹窗逻辑
+        fetch('./announcement.json')
+            .then(res => {
+                if (!res.ok) throw new Error('No announcement');
+                return res.json();
+            })
+            .then(data => {
+                if (data && data.show && data.content) {
+                    document.getElementById('announcement-content').innerHTML = data.content;
+                    announcementModal.style.display = 'flex';
+                    showAnnouncement();
+                }
+            })
+            .catch(() => {});
+
+        announcementClose.onclick = hideAnnouncement;
+    </script>
+    <script src="browser-warning.js"></script>
 </body>
 
 </html>

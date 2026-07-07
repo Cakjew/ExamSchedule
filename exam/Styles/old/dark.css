@@ -481,8 +481,8 @@ input:checked + .slider:before {
     font-size: 14px;
     border: 1px solid #555;
     border-radius: 4px;
-    background-color: #222;
-    color: #e0e0e0;
+    background-color: #111827;
+    color: #f5f7fb;
     cursor: pointer;
     outline: none;
     width: 120px;
@@ -498,8 +498,8 @@ input:checked + .slider:before {
 }
 
 #theme-select option {
-    background-color: #222;
-    color: #e0e0e0;
+    background-color: #111827;
+    color: #f5f7fb;
     padding: 8px;
 }
 

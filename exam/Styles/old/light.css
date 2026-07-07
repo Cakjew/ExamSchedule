@@ -488,8 +488,8 @@ theme-toggle-container {
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    background-color: #fff;
-    color: #333;
+    background-color: #ffffff;
+    color: #111827;
     cursor: pointer;
     outline: none;
     width: 120px;
@@ -505,8 +505,8 @@ theme-toggle-container {
 }
 
 #theme-select option {
-    background-color: #fff;
-    color: #333;
+    background-color: #ffffff;
+    color: #111827;
     padding: 8px;
 }
 

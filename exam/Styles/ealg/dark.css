@@ -18,9 +18,9 @@ select,
 select option,
 #theme-select,
 #theme-select option {
-    color-scheme: light;
-    background-color: #ffffff;
-    color: #111827;
+    color-scheme: dark;
+    background-color: #111827;
+    color: #f5f7fb;
 }
 
 select option,
@@ -191,7 +191,7 @@ h1 {
 .right-column td,
 .right-column label,
 .right-column input {
-    font-size: 1.50rem;
+    font-size: 1.65rem;
 }
 .right-column span {
     font-size: 1.20rem;
@@ -501,8 +501,8 @@ input:checked + .slider:before {
     width: 100%;
     padding: 10px 14px;
     font-size: 0.95rem;
-    background: rgba(255,255,255,0.08);
-    color: var(--text);
+    background-color: #111827;
+    color: #f5f7fb;
     border: 1px solid rgba(255,255,255,0.14);
     border-radius: 12px;
     cursor: pointer;
@@ -518,6 +518,17 @@ input:checked + .slider:before {
     outline: none;
     border-color: rgba(59, 130, 246, 0.6);
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.16);
+}
+
+#theme-select option {
+    background-color: #111827;
+    color: #f5f7fb;
+    padding: 8px;
+}
+
+#theme-select option:hover,
+#theme-select option:focus {
+    background-color: #1f2937;
 }
 
 .reminder-overlay {

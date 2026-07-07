@@ -92,6 +92,17 @@ body::before {
 
 #fontSelector {
     padding: 10px 14px;
+    background: rgba(20, 24, 31, 0.92);
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.12);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+#fontSelector option {
+    background: rgba(20, 24, 31, 0.98);
+    color: var(--text);
 }
 
 .btn.fullscreen {

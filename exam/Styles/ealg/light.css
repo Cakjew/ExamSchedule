@@ -191,7 +191,7 @@ h1 {
 .right-column td,
 .right-column label,
 .right-column input {
-    font-size: 1.5rem;
+    font-size: 1.65rem;
 }
 
 .right-column span {
@@ -502,8 +502,8 @@ input:checked + .slider:before {
     width: 100%;
     padding: 10px 14px;
     font-size: 0.95rem;
-    background: rgba(255,255,255,0.95);
-    color: var(--text);
+    background-color: #ffffff;
+    color: #111827;
     border: 1px solid rgba(15,23,42,0.16);
     border-radius: 12px;
     cursor: pointer;
@@ -519,6 +519,17 @@ input:checked + .slider:before {
     outline: none;
     border-color: rgba(37, 99, 235, 0.6);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.16);
+}
+
+#theme-select option {
+    background-color: #ffffff;
+    color: #111827;
+    padding: 8px;
+}
+
+#theme-select option:hover,
+#theme-select option:focus {
+    background-color: #e3f2fd;
 }
 
 .reminder-overlay {

@@ -531,7 +531,7 @@ input:checked + .slider:before {
 
 #theme-select option {
     background-color: #fff;
-    color: #1565c0;
+    color: #111827;
     padding: 8px;
 }
 

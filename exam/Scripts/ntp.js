@@ -1,6 +1,6 @@
 (function(){
-    // 使用淘宝的时间接口获取准确的网络时间
-    const TIME_API = 'https://acs.m.taobao.com/gw/mtop.common.getTimestamp/';
+    // 使用免费的 timeapi.io 服务获取准确的网络时间
+    const TIME_API = 'https://timeapi.io/api/Time/current/zone?timeZone=Asia/Shanghai';
     
     const NTP = {
         offset: 0,
@@ -14,30 +14,24 @@
             NTP.ready = (async () => {
                 try {
                     const resp = await fetch(TIME_API, { cache: 'no-store' });
-
+                    
                     if (!resp.ok) throw new Error('HTTP ' + resp.status);
                     const json = await resp.json();
                     let serverMs = null;
 
-                    // 兼容淘宝接口：json.data.t 为毫秒字符串
-                    if (json && json.data && (typeof json.data.t === 'string' || typeof json.data.t === 'number')) {
-                        // 有时是字符串，有时已是数字，统一转成整数毫秒
-                        serverMs = Number.parseInt(json.data.t, 10);
-                    } else {
-                        // 兼容旧的 timeapi.io 等字段（保留原来的兼容逻辑）
-                        if (typeof json.epochMilliseconds === 'number') {
-                            serverMs = json.epochMilliseconds;
-                        } else if (typeof json.epoch === 'number') {
-                            serverMs = json.epoch;
-                        } else if (typeof json.unixtime === 'number') {
-                            serverMs = Math.floor(json.unixtime * 1000);
-                        } else if (json.datetime) {
-                            serverMs = Date.parse(json.datetime);
-                        } else if (json.dateTime) {
-                            serverMs = Date.parse(json.dateTime);
-                        } else if (json.date_time) {
-                            serverMs = Date.parse(json.date_time);
-                        }
+                    // 兼容多个可能的字段
+                    if (typeof json.epochMilliseconds === 'number') {
+                        serverMs = json.epochMilliseconds;
+                    } else if (typeof json.epoch === 'number') {
+                        serverMs = json.epoch;
+                    } else if (typeof json.unixtime === 'number') {
+                        serverMs = Math.floor(json.unixtime * 1000);
+                    } else if (json.datetime) {
+                        serverMs = Date.parse(json.datetime);
+                    } else if (json.dateTime) {
+                        serverMs = Date.parse(json.dateTime);
+                    } else if (json.date_time) {
+                        serverMs = Date.parse(json.date_time);
                     }
 
                     if (!serverMs || Number.isNaN(serverMs)) throw new Error('Invalid time response');
@@ -57,10 +51,10 @@
                     if (el) {
                         if (NTP.status === 'ok') {
                             const t = new Date(Date.now() + NTP.offset).toLocaleTimeString('zh-CN', { hour12: false });
-                            el.textContent = `TaobaoTime: OK ${t}`;
+                            el.textContent = `TimeAPI: OK ${t}`;
                             el.style.color = '#5ba838';
                         } else {
-                            el.textContent = `TaobaoTime: ERR`;
+                            el.textContent = `TimeAPI: ERR`;
                             el.style.color = 'red';
                         }
                     }

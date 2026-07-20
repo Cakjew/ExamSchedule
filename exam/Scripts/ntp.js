@@ -56,10 +56,10 @@
                     if (el) {
                         if (NTP.status === 'ok') {
                             const t = new Date(Date.now() + NTP.offset).toLocaleTimeString('zh-CN', { hour12: false });
-                            el.textContent = `TimeAPI: OK ${t}`;
+                            el.textContent = `TimeAPI: Asia/Shanghai | ${t}`;
                             el.style.color = '#5ba838';
                         } else {
-                            el.textContent = `TimeAPI: ERR`;
+                            el.textContent = `TimeAPI: Error`;
                             el.style.color = 'red';
                         }
                     }

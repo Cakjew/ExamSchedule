@@ -641,37 +641,7 @@ input:checked + .slider:before {
     max-width: 95vw;
 }
 
-#paper-count-position {
-    width: 100%;
-    padding: 12px 16px;
-    font-size: 1.2rem;
-    background-color: #FFFFFF;
-    color: #0D47A1;
-    border: 2px solid #BBDEFB;
-    border-radius: 12px;
-    cursor: pointer;
-    margin-bottom: 8px;
-    margin-top: 4px;
-    appearance: none;
-    -webkit-appearance: none;
-}
 
-#paper-count-position:focus {
-    outline: none;
-    border-color: #1976D2;
-    background-color: #E3F2FD;
-}
-
-.info-section .paper-count-container {
-    position: static !important;
-    box-shadow: none;
-    border: none;
-    background: transparent;
-    padding: 0;
-    min-width: 0;
-    margin-top: 16px;
-    margin-bottom: 8px;
-}
 
 @media (max-width: 700px) {
     .paper-count-container {

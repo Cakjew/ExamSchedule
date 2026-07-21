@@ -970,34 +970,3 @@ input:checked + .slider:before {
     box-shadow: 0 2px 8px rgba(179,157,219,0.12);
 }
 
-#paper-count-position {
-    width: 100%;
-    padding: 8px 12px;
-    font-size: 1rem;
-    background-color: #29293a;
-    color: #ede7f6;
-    border: 1px solid #33304a;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 8px;
-    margin-top: 4px;
-    appearance: none;
-    -webkit-appearance: none;
-}
-
-#paper-count-position:focus {
-    outline: none;
-    border-color: #b39ddb;
-    background-color: #33304a;
-}
-
-.info-section .paper-count-container {
-    position: static !important;
-    box-shadow: none;
-    border: none;
-    background: transparent;
-    padding: 0;
-    min-width: 0;
-    margin-top: 8px;
-    margin-bottom: 4px;
-}

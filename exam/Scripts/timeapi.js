@@ -1,16 +1,16 @@
 (function(){
     const TIME_API = 'https://uapis.cn/api/v1/misc/worldtime?city=Asia/Shanghai';
     
-    const NTP = {
+    const TimeAPI = {
         offset: 0,
         status: 'init',
         ready: null,
         lastSync: null,
         serverRaw: null,
         async init() {
-            if (NTP.ready) return NTP.ready;
-            console.debug('TimeAPI: init() called');
-            NTP.ready = (async () => {
+            if (TimeAPI.ready) return TimeAPI.ready;
+            console.log('Connecting to TimeAPI', TIME_API);
+            TimeAPI.ready = (async () => {
                 try {
                     const resp = await fetch(TIME_API, { cache: 'no-store' });
                     
@@ -40,22 +40,23 @@
                     }
 
                     if (!serverMs || Number.isNaN(serverMs)) throw new Error('Invalid time response');
-                    NTP.offset = serverMs - Date.now();
-                    NTP.status = 'ok';
-                    NTP.lastSync = Date.now();
-                    NTP.serverRaw = json;
+                    TimeAPI.offset = serverMs - Date.now();
+                    TimeAPI.status = 'ok';
+                    TimeAPI.lastSync = Date.now();
+                    TimeAPI.serverRaw = json;
+                    console.log('TimeAPI is connected',TimeAPI.serverRaw);
                 } catch (e) {
-                    console.warn('NTP init failed, falling back to system time:', e);
-                    NTP.offset = 0;
-                    NTP.status = 'error';
-                    NTP.lastSync = Date.now();
+                    console.error('TimeAPI connect failed, falling back to system time:', e);
+                    TimeAPI.offset = 0;
+                    TimeAPI.status = 'error';
+                    TimeAPI.lastSync = Date.now();
                 }
                 // 尝试在页面上显示状态
                 try {
-                    const el = document.getElementById('ntp-status');
+                    const el = document.getElementById('TimeAPI-status');
                     if (el) {
-                        if (NTP.status === 'ok') {
-                            const t = new Date(Date.now() + NTP.offset).toLocaleTimeString('zh-CN', { hour12: false });
+                        if (TimeAPI.status === 'ok') {
+                            const t = new Date(Date.now() + TimeAPI.offset).toLocaleTimeString('zh-CN', { hour12: false });
                             el.textContent = `TimeAPI: Asia/Shanghai | ${t}`;
                             el.style.color = '#5ba838';
                         } else {
@@ -65,21 +66,21 @@
                     }
                 } catch (e) {}
 
-                return NTP;
+                return TimeAPI;
             })();
-            return NTP.ready;
+            return TimeAPI.ready;
         },
         async sync() {
             // 强制重新同步
-            NTP.ready = null;
-            return NTP.init();
+            TimeAPI.ready = null;
+            return TimeAPI.init();
         },
-        now() { return new Date(Date.now() + NTP.offset); },
-        nowMs() { return Date.now() + NTP.offset; },
-        getStatus() { return { status: NTP.status, lastSync: NTP.lastSync, serverRaw: NTP.serverRaw } }
+        now() { return new Date(Date.now() + TimeAPI.offset); },
+        nowMs() { return Date.now() + TimeAPI.offset; },
+        getStatus() { return { status: TimeAPI.status, lastSync: TimeAPI.lastSync, serverRaw: TimeAPI.serverRaw } }
     };
 
     // 暴露并自动初始化
-    window.NTP = NTP;
-    NTP.init().catch(err => console.warn('NTP.init() rejected:', err));
+    window.TimeAPI = TimeAPI;
+    TimeAPI.init().catch(err => console.warn('TimeAPI.init() rejected:', err));
 })();

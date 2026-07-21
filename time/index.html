@@ -63,10 +63,10 @@
 			<button class="btn fullscreen" onclick="toggleFullScreen()">全屏/还原</button>
 			
 		</div>
-				<span id="ntp-status" style="margin-left:12px; font-size:13px; color:#999">TimeAPI: init</span>
+				<span id="TimeAPI-status" style="margin-left:12px; font-size:13px; color:#999">TimeAPI: init</span>
 	</div>
 
-	<script src="../exam/Scripts/ntp.js"></script>
+	<script src="../exam/Scripts/TimeAPI.js"></script>
 	<script>
 		// 返回上级目录的函数
 		function goBack() {
@@ -74,7 +74,7 @@
 		}
 
 		setInterval(() => {
-			const baseMs = (window.NTP && typeof window.NTP.nowMs === 'function') ? window.NTP.nowMs() : Date.now();
+			const baseMs = (window.TimeAPI && typeof window.TimeAPI.nowMs === 'function') ? window.TimeAPI.nowMs() : Date.now();
 			const date = new Date(baseMs);
 			const time = date.toLocaleTimeString('zh-CN', {
 				hour12: false

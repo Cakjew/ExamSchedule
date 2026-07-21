@@ -63,9 +63,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         setCookie("examReminders", encodeURIComponent(JSON.stringify(data.examReminders)), 365);
                     }
                     displayExamInfo(data);
-                    // 等待 NTP 初始化，失败则回退到系统时间
-                    if (window.NTP && typeof window.NTP.init === 'function') {
-                        window.NTP.init().then(() => {
+                    // 等待 TimeAPI 初始化，失败则回退到系统时间
+                    if (window.TimeAPI && typeof window.TimeAPI.init === 'function') {
+                        window.TimeAPI.init().then(() => {
                             updateCurrentTime();
                             updateExamInfo(data);
                             setInterval(() => updateCurrentTime(), 1000);
@@ -97,8 +97,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     setCookie("examReminders", encodeURIComponent(JSON.stringify(data.examReminders)), 365);
                 }
                 displayExamInfo(data);
-                if (window.NTP && typeof window.NTP.init === 'function') {
-                    window.NTP.init().then(() => {
+                if (window.TimeAPI && typeof window.TimeAPI.init === 'function') {
+                    window.TimeAPI.init().then(() => {
                         updateCurrentTime();
                         updateExamInfo(data);
                         setInterval(() => updateCurrentTime(), 1000);
@@ -132,8 +132,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     setCookie("examReminders", encodeURIComponent(JSON.stringify(data.examReminders)), 365);
                 }
                 displayExamInfo(data);
-                if (window.NTP && typeof window.NTP.init === 'function') {
-                    window.NTP.init().then(() => {
+                if (window.TimeAPI && typeof window.TimeAPI.init === 'function') {
+                    window.TimeAPI.init().then(() => {
                         updateCurrentTime();
                         updateExamInfo(data);
                         setInterval(() => updateCurrentTime(), 1000);
@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateCurrentTime() {
         try {
-            const baseMs = (window.NTP && typeof window.NTP.nowMs === 'function') ? window.NTP.nowMs() : Date.now();
+            const baseMs = (window.TimeAPI && typeof window.TimeAPI.nowMs === 'function') ? window.TimeAPI.nowMs() : Date.now();
             const now = new Date(baseMs + offsetTime * 1000);
             currentTimeElem.textContent = now.toLocaleTimeString('zh-CN', { hour12: false });
         } catch (e) {
@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateExamInfo(data) {
         try {
-            const baseMs = (window.NTP && typeof window.NTP.nowMs === 'function') ? window.NTP.nowMs() : Date.now();
+            const baseMs = (window.TimeAPI && typeof window.TimeAPI.nowMs === 'function') ? window.TimeAPI.nowMs() : Date.now();
             const now = new Date(baseMs + offsetTime * 1000);
             let currentExam = null;
             let nextExam = null;
@@ -359,7 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 exams.forEach(exam => {
                     const start = new Date(exam.start);
                     const end = new Date(exam.end);
-                    const baseMs = (window.NTP && typeof window.NTP.nowMs === 'function') ? window.NTP.nowMs() : Date.now();
+                    const baseMs = (window.TimeAPI && typeof window.TimeAPI.nowMs === 'function') ? window.TimeAPI.nowMs() : Date.now();
                     const now = new Date(baseMs + offsetTime * 1000);
 
                     let status = "未开始";

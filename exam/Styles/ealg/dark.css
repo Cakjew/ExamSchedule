@@ -33,7 +33,7 @@ select option,
     top: 20px;
     left: 20px;
     padding: 10px 16px;
-    font-size: 0.95rem;
+    font-size: 1rem;
     cursor: pointer;
     background: rgba(255, 255, 255, 0.08);
     color: var(--text);
@@ -108,7 +108,7 @@ body::-webkit-scrollbar {
     transform: translateY(-1px);
 }
 
-#ntp-status {
+#TimeAPI-status {
     color: var(--muted);
     background: rgba(255, 255, 255, 0.05);
     padding: 8px 12px;
@@ -790,13 +790,13 @@ input:checked + .slider:before {
 }
 
 .top-btn-group button {
-    padding: 12px 24px;
+    padding: 10px 16px;
     font-size: 1rem;
     cursor: pointer;
     background-color: #404040;
     color: #E6E1E5;
     border: none;
-    border-radius: 20px;
+    border-radius: 999px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.3);
     transition: all 0.2s ease;
     display: flex;
@@ -1064,34 +1064,3 @@ input:checked + .slider:before {
     box-shadow: 0 2px 8px rgba(0,0,0,0.4);
 }
 
-#paper-count-position {
-    width: 100%;
-    padding: 12px 16px;
-    font-size: 1.2rem;
-    background-color: #404040;
-    color: #E6E1E5;
-    border: 2px solid #555555;
-    border-radius: 12px;
-    cursor: pointer;
-    margin-bottom: 8px;
-    margin-top: 4px;
-    appearance: none;
-    -webkit-appearance: none;
-}
-
-#paper-count-position:focus {
-    outline: none;
-    border-color: #D0BCFF;
-    background-color: #4A4A4A;
-}
-
-.info-section .paper-count-container {
-    position: static !important;
-    box-shadow: none;
-    border: none;
-    background: transparent;
-    padding: 0;
-    min-width: 0;
-    margin-top: 16px;
-    margin-bottom: 8px;
-}

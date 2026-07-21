@@ -170,7 +170,7 @@ body::before {
     font-size: 0.9rem;
 }
 
-#ntp-status {
+#TimeAPI-status {
     color: var(--muted);
     margin-left: 12px;
     font-size: 13px;

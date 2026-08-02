@@ -1,13 +1,101 @@
 (function() {
-    function isLegacyEdge() {
+    function getBrowserInfo() {
         var ua = navigator.userAgent || '';
-        return /Edge\/\d+/i.test(ua) && !/Edg\//i.test(ua);
+        var browser = {
+            name: 'Unknown',
+            version: 0
+        };
+
+        var edgeMatch = ua.match(/Edg(?:A|iOS)?\/(\d+)/i);
+        if (edgeMatch) {
+            browser.name = 'Edge';
+            browser.version = parseInt(edgeMatch[1], 10) || 0;
+            return browser;
+        }
+
+        var chromeMatch = ua.match(/(?:Chrome|CriOS)\/(\d+)/i);
+        if (chromeMatch) {
+            browser.name = 'Chrome';
+            browser.version = parseInt(chromeMatch[1], 10) || 0;
+            return browser;
+        }
+
+        var firefoxMatch = ua.match(/(?:Firefox|FxiOS)\/(\d+)/i);
+        if (firefoxMatch) {
+            browser.name = 'Firefox';
+            browser.version = parseInt(firefoxMatch[1], 10) || 0;
+            return browser;
+        }
+
+        var operaMatch = ua.match(/(?:OPR|Opera)\/(\d+)/i);
+        if (operaMatch) {
+            browser.name = 'Opera';
+            browser.version = parseInt(operaMatch[1], 10) || 0;
+            return browser;
+        }
+
+        var safariMatch = ua.match(/Version\/(\d+)/i);
+        if (safariMatch) {
+            browser.name = 'Safari';
+            browser.version = parseInt(safariMatch[1], 10) || 0;
+            return browser;
+        }
+
+        return browser;
+    }
+
+    function isLegacyBrowser() {
+        var ua = navigator.userAgent || '';
+        var oldEdgePattern = /Edge\/\d+/i.test(ua) && !/Edg\//i.test(ua);
+        var oldIEPattern = /MSIE|Trident/i.test(ua);
+        var oldKernelPattern = /Presto|Konqueror|MIDP|Mosaic|Netscape/i.test(ua);
+        var browser = getBrowserInfo();
+
+        if (oldIEPattern || oldEdgePattern || oldKernelPattern) {
+            return true;
+        }
+
+        if (browser.name === 'Chrome' && browser.version < 80) {
+            return true;
+        }
+
+        if (browser.name === 'Edge' && browser.version < 79) {
+            return true;
+        }
+
+        if (browser.name === 'Firefox' && browser.version < 60) {
+            return true;
+        }
+
+        if (browser.name === 'Opera' && browser.version < 60) {
+            return true;
+        }
+
+        if (browser.name === 'Safari' && browser.version < 14) {
+            return true;
+        }
+
+        return false;
+    }
+
+    function addListener(target, eventName, callback) {
+        if (target.addEventListener) {
+            target.addEventListener(eventName, callback, false);
+        } else if (target.attachEvent) {
+            target.attachEvent('on' + eventName, callback);
+        }
+    }
+
+    function removeOverlay(overlay) {
+        if (overlay && overlay.parentNode) {
+            overlay.parentNode.removeChild(overlay);
+        }
     }
 
     function createWarningOverlay() {
         var style = document.createElement('style');
         style.textContent = '\
-            .edge-warning-overlay {\
+            .browser-warning-overlay {\
                 position: fixed;\
                 top: 0;\
                 right: 0;\
@@ -25,10 +113,10 @@
                 opacity: 0;\
                 animation: edgeFadeIn 0.28s ease forwards;\
             }\
-            .edge-warning-overlay.closing {\
+            .browser-warning-overlay.closing {\
                 animation: edgeFadeOut 0.24s ease forwards;\
             }\
-            .edge-warning-card {\
+            .browser-warning-card {\
                 width: 760px;\
                 max-width: 100%;\
                 background: #1f2937;\
@@ -43,32 +131,46 @@
                 opacity: 0;\
                 animation: cardPopIn 0.32s cubic-bezier(0.2, 0, 0, 1) forwards;\
             }\
-            .edge-warning-overlay.closing .edge-warning-card {\
+            .browser-warning-overlay.closing .browser-warning-card {\
                 animation: cardPopOut 0.24s ease forwards;\
             }\
-            .edge-warning-card h1 {\
+            .browser-warning-card h1 {\
+                display: block !important;\
                 margin: 0 0 16px;\
                 font-size: 28px;\
                 color: #60a5fa;\
                 line-height: 1.2;\
             }\
-            .edge-warning-card p {\
+            .browser-warning-card p {\
                 margin: 0 0 16px;\
                 line-height: 1.75;\
                 color: #cbd5e1;\
                 font-size: 16px;\
             }\
-            .edge-warning-actions {\
+            .browser-warning-actions {\
                 margin-top: 24px;\
                 display: -ms-flexbox;\
                 display: flex;\
                 -ms-flex-wrap: wrap;\
                 flex-wrap: wrap;\
                 gap: 12px;\
-                -ms-flex-pack: end;\
-                justify-content: flex-end;\
+                -ms-flex-pack: justify;\
+                justify-content: space-between;\
+                -ms-flex-align: center;\
+                align-items: center;\
             }\
-            .edge-warning-button, .edge-warning-link {\
+            .browser-warning-download-list {\
+                display: -ms-flexbox;\
+                display: flex;\
+                -ms-flex-wrap: wrap;\
+                flex-wrap: wrap;\
+                gap: 12px;\
+                -ms-flex-pack: start;\
+                justify-content: flex-start;\
+                -ms-flex: 1 1 auto;\
+                flex: 1 1 auto;\
+            }\
+            .browser-warning-button, .browser-warning-link {\
                 border: none;\
                 border-radius: 999px;\
                 padding: 12px 22px;\
@@ -77,25 +179,30 @@
                 cursor: pointer;\
                 text-decoration: none;\
             }\
-            .edge-warning-button {\
+            .browser-warning-button {\
                 background: #60a5fa;\
                 color: #0f172a;\
             }\
-            .edge-warning-button:hover {\
+            .browser-warning-button:hover {\
                 background: #3b82f6;\
             }\
-            .edge-warning-link {\
-                background: rgba(255,255,255,0.08);\
+            .browser-warning-link {\
+                background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));\
                 color: #e2e8f0;\
                 display: -ms-inline-flexbox;\
                 display: inline-flex;\
                 -ms-flex-align: center;\
                 align-items: center;\
+                border: 1px solid rgba(148, 163, 184, 0.24);\
+                box-shadow: 0 12px 24px rgba(15, 23, 42, 0.28);\
+                transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;\
             }\
-            .edge-warning-link:hover {\
-                background: rgba(255,255,255,0.16);\
+            .browser-warning-link:hover {\
+                background: linear-gradient(135deg, rgba(96, 165, 250, 0.24), rgba(255,255,255,0.1));\
+                border-color: rgba(96, 165, 250, 0.55);\
+                transform: translateY(-1px);\
             }\
-            .edge-warning-note {\
+            .browser-warning-note {\
                 opacity: 0.9;\
                 font-size: 13px;\
                 margin-top: 12px;\
@@ -121,37 +228,48 @@
         document.head.appendChild(style);
 
         var overlay = document.createElement('div');
-        overlay.className = 'edge-warning-overlay';
+        overlay.className = 'browser-warning-overlay';
         overlay.innerHTML = '\
-            <div class="edge-warning-card">\
-                <h1>检测到旧版 Microsoft Edge</h1>\
-                <p>您当前正在使用基于 EdgeHTML 的旧版本 Microsoft Edge。此页面在该浏览器中可能出现布局错乱，且不提供技术支持。</p>\
-                <p>建议改用最新 Microsoft Edge (Chromium)、Google Chrome、Firefox 或 Safari 以获得更稳定的体验。</p>\
-                <div class="edge-warning-actions">\
-                    <button type="button" class="edge-warning-button" id="edge-warning-close">我知道了</button>\
-                    <a class="edge-warning-link" href="https://www.microsoft.com/edge" target="_blank" rel="noopener noreferrer">下载最新 Edge</a>\
+            <div class="browser-warning-card">\
+                <h1>您的浏览器版本过低</h1>\
+                <p>您当前使用的浏览器内核较旧，可能无法完整支持本站所需的现代 Web 标准。</p>\
+                <p>本页面依赖现代 Web 标准，在旧内核浏览器中可能出现空白、布局错乱或无法正常运行。</p>\
+                <div class="browser-warning-actions">\
+                    <div class="browser-warning-download-list">\
+                        <a class="browser-warning-link" href="https://www.google.cn/chrome/" target="_blank" rel="noopener noreferrer">Chrome</a>\
+                        <a class="browser-warning-link" href="https://www.microsoft.com/zh-cn/edge/download" target="_blank" rel="noopener noreferrer">Edge</a>\
+                        <a class="browser-warning-link" href="https://www.firefox.com/zh-CN/download/all/desktop-release/" target="_blank" rel="noopener noreferrer">Firefox</a>\
+                    </div>\
+                    <button type="button" class="browser-warning-button" id="browser-warning-close">我知道了</button>\
                 </div>\
-                <div class="edge-warning-note">如果您无法升级，请使用其他现代浏览器访问本站。</div>\
+                <div class="browser-warning-note">建议改用 Microsoft Edge、Google Chrome、Firefox 或 Safari。</div>\
             </div>\
         ';
 
         document.body.appendChild(overlay);
-        var closeButton = document.getElementById('edge-warning-close');
+
+        var closeButton = document.getElementById('browser-warning-close');
         if (closeButton) {
-            closeButton.addEventListener('click', function() {
-                overlay.classList.add('closing');
-                overlay.addEventListener('animationend', function handleClose() {
-                    if (overlay.parentNode) {
-                        overlay.parentNode.removeChild(overlay);
-                    }
-                    overlay.removeEventListener('animationend', handleClose);
-                });
+            addListener(closeButton, 'click', function() {
+                overlay.className = overlay.className + ' closing';
+                var finishClose = function() {
+                    removeOverlay(overlay);
+                };
+
+                if (typeof overlay.addEventListener === 'function') {
+                    addListener(overlay, 'animationend', function handleClose() {
+                        removeOverlay(overlay);
+                        overlay.removeEventListener('animationend', handleClose);
+                    });
+                }
+
+                setTimeout(finishClose, 260);
             });
         }
     }
 
     function init() {
-        if (isLegacyEdge()) {
+        if (isLegacyBrowser()) {
             createWarningOverlay();
         }
     }

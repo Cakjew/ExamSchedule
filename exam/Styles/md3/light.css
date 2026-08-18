@@ -1,381 +1,791 @@
-#return-btn {
-    position: absolute; /* 绝对定位 */
-    top: 20px; /* 距离顶部 20px */
-    left: 20px; /* 距离左侧 20px */
-    padding: 12px 24px; /* 内边距 */
-    font-size: 1rem; /* 字体大小 */
-    cursor: pointer; /* 鼠标悬停时显示为手型 */
-    background-color: #E3F2FD; /* 浅蓝色 */
-    color: #0D47A1; /* 深蓝色文字 */
-    border: none; /* 按钮边框样式 */
-    border-radius: 20px; /* 按钮圆角大小 */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 按钮阴影 */
-    transition: all 0.2s ease; /* 背景颜色和缩放的过渡效果 */
-    z-index: 1001; /* 按钮层级 */
+/* ==========================================================================
+   Google Material Design 3 (MD3) — Light Theme
+   --------------------------------------------------------------------------
+   结构说明（与 dark.css 完全镜像，仅 :root 颜色令牌不同）：
+     1. 设计令牌 (Design Tokens)
+     2. 基础重置 (Base / Reset)
+     3. 页面布局 (Layout)
+     4. 顶部应用栏 (Top App Bar)
+     5. 按钮体系 (Buttons)
+     6. 排版 (Typography)
+     7. 卡片 (Cards)
+     8. 时钟与信息区 (Clock / Info)
+     9. 表格与状态徽章 (Table / Status Chips)
+    10. 数量控制面板 (Paper Count Panel)
+    11. 设置对话框 (Settings Dialog)
+    12. 切换开关 (Switch)
+    13. 提醒浮层 (Reminder Overlay)
+    14. 错误提示 (Error Toast)
+    15. 动画 (Animations)
+    16. 响应式 (Responsive)
+   ========================================================================== */
+
+/* ==========================================================================
+   1. 设计令牌 — 颜色角色 / 形状 / 高度 / 间距 / 状态层
+   ========================================================================== */
+:root {
+    color-scheme: light;
+
+    /* ---- 颜色角色 (Color Roles) ---- */
+    --md-sys-color-primary: #2563EB;
+    --md-sys-color-on-primary: #FFFFFF;
+    --md-sys-color-primary-container: #DBEAFE;
+    --md-sys-color-on-primary-container: #1E3A8A;
+    --md-sys-color-secondary: #64748B;
+    --md-sys-color-on-secondary: #FFFFFF;
+    --md-sys-color-secondary-container: #E2E8F0;
+    --md-sys-color-on-secondary-container: #1E293B;
+    --md-sys-color-tertiary: #0EA5E9;
+    --md-sys-color-on-tertiary: #FFFFFF;
+    --md-sys-color-tertiary-container: #E0F2FE;
+    --md-sys-color-on-tertiary-container: #0C4A6E;
+    --md-sys-color-error: #DC2626;
+    --md-sys-color-on-error: #FFFFFF;
+    --md-sys-color-error-container: #FEE2E2;
+    --md-sys-color-on-error-container: #7F1D1D;
+    --md-sys-color-background: #F8FAFC;
+    --md-sys-color-on-background: #0F172A;
+    --md-sys-color-surface: #FFFFFF;
+    --md-sys-color-on-surface: #0F172A;
+    --md-sys-color-surface-variant: #F1F5F9;
+    --md-sys-color-on-surface-variant: #475569;
+    --md-sys-color-surface-container-lowest: #FFFFFF;
+    --md-sys-color-surface-container-low: #F1F5F9;
+    --md-sys-color-surface-container: #EAF0F8;
+    --md-sys-color-surface-container-high: #E2E8F0;
+    --md-sys-color-surface-container-highest: #CBD5E1;
+    --md-sys-color-inverse-surface: #0F172A;
+    --md-sys-color-inverse-on-surface: #F8FAFC;
+    --md-sys-color-inverse-primary: #93C5FD;
+    --md-sys-color-outline: #CBD5E1;
+    --md-sys-color-outline-variant: #E2E8F0;
+    --md-sys-color-scrim: rgba(15, 23, 42, 0.38);
+
+    /* ---- 状态徽章颜色 (Status Chips) ---- */
+    --md-status-ongoing-container: #DCFCE7;
+    --md-status-ongoing: #166534;
+    --md-status-upcoming-container: #FEF3C7;
+    --md-status-upcoming: #92400E;
+    --md-status-finished-container: #FEE2E2;
+    --md-status-finished: #B91C1C;
+    --md-status-notstarted-container: #E0F2FE;
+    --md-status-notstarted: #0C4A6E;
+
+    /* ---- 状态层叠加色 (State Layer) ---- */
+    --md-state-hover: rgba(15, 23, 42, 0.06);
+    --md-state-active: rgba(15, 23, 42, 0.10);
+
+    /* ---- 形状 (Shape Scale) ---- */
+    --md-sys-shape-none: 0px;
+    --md-sys-shape-extra-small: 4px;
+    --md-sys-shape-small: 8px;
+    --md-sys-shape-medium: 12px;
+    --md-sys-shape-large: 16px;
+    --md-sys-shape-extra-large: 28px;
+    --md-sys-shape-full: 999px;
+
+    /* ---- 高度 (Elevation Levels) — 亮/暗主题保持一致 ---- */
+    --md-sys-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.18), 0 1px 3px 1px rgba(0, 0, 0, 0.12);
+    --md-sys-elevation-2: 0 1px 2px rgba(0, 0, 0, 0.20), 0 2px 6px 2px rgba(0, 0, 0, 0.14);
+    --md-sys-elevation-3: 0 4px 8px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.20);
+
+    /* ---- 间距 (Spacing Scale) ---- */
+    --md-space-1: 4px;
+    --md-space-2: 8px;
+    --md-space-3: 12px;
+    --md-space-4: 16px;
+    --md-space-5: 24px;
+    --md-space-6: 32px;
+    --md-space-7: 40px;
+
+    /* ---- 页面氛围背景与选择框箭头（按主题变化的颜色资源） ---- */
+    --md-app-bg: linear-gradient(135deg, rgba(37, 99, 235, 0.08), transparent 40%), linear-gradient(320deg, #F8FAFC, #EFF6FF);
+    --md-app-glow: radial-gradient(circle at top left, rgba(37, 99, 235, 0.14), transparent 34%);
+    --md-select-arrow: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
 }
 
-#return-btn:hover {
-    background-color: #90CAF9; /* 悬停时浅蓝色 */
-    transform: translateY(-1px); /* 悬停时向上移动 1px */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* 悬停时的阴影效果 */
+/* ==========================================================================
+   2. 基础重置
+   ========================================================================== */
+* {
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Roboto', 'HarmonyOS Sans SC', sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'HarmonyOS Sans SC', sans-serif;
     margin: 0;
-    padding: 0;
-    background: #EAF6FF; /* 整体背景淡蓝色 */
-    color: #0D47A1;
+    padding: 20px 24px 40px;
+    background: var(--md-app-bg);
+    color: var(--md-sys-color-on-background);
     overflow: auto;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: var(--md-app-glow);
+    pointer-events: none;
 }
 
 body::-webkit-scrollbar {
     display: none;
 }
 
-.top-btn-group {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    z-index: 1001;
+/* 原生控件跟随主题明暗 */
+select,
+select option,
+#theme-select,
+#theme-select option {
+    color-scheme: light;
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
 }
 
-#fullscreen-btn, #settings-btn, #reminder-settings-btn {
-    padding: 12px 24px;
-    font-size: 1rem;
-    cursor: pointer;
-    background-color: #E3F2FD;
-    color: #0D47A1;
-    border: none;
-    border-radius: 20px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
+select option,
+#theme-select option {
+    padding: 8px 10px;
 }
 
-#fullscreen-btn::before {
-    content: "fullscreen";
-    font-family: 'Material Icons';
-    font-size: 20px;
-    margin-right: 4px;
-}
-
-#settings-btn::before {
-    content: "settings";
-    font-family: 'Material Icons';
-    font-size: 20px;
-    margin-right: 4px;
-}
-
-#reminder-settings-btn::before {
-    content: "notifications";
-    font-family: 'Material Icons';
-    font-size: 20px;
-    margin-right: 4px;
-}
-
-#fullscreen-btn:hover, #settings-btn:hover, #reminder-settings-btn:hover {
-    background-color: #90CAF9;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-
+/* ==========================================================================
+   3. 页面布局
+   ========================================================================== */
 .container {
-    padding: 24px;
-    max-width: 1400px;
-    margin: auto;
-    background-color: #F0F7FF;
-    border-radius: 28px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-h1 {
-    font-size: 3.5rem;
-    font-weight: 400;
-    text-align: left;
-    margin-bottom: 16px;
-    color: #0D47A1;
+    padding: 28px 32px 32px;
+    max-width: 92%;
+    width: min(1400px, 92vw);
+    margin: 0 auto;
+    background-color: var(--md-sys-color-surface-container-lowest);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-extra-large);
+    box-shadow: var(--md-sys-elevation-2);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-#room {
-    font-size: 3.5rem;
-    font-weight: 400;
-    color: #0D47A1;
-    margin-left: 20px;
-}
-
-#message {
-    font-size: 1.8rem;
-    color: #1976D2;
-    margin-bottom: 24px;
+    flex-direction: column;
+    align-items: stretch;
 }
 
 .content {
     display: flex;
     justify-content: space-between;
     gap: 24px;
+    align-items: flex-start;
 }
 
-.left-column, .right-column {
+.left-column,
+.right-column {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
 }
 
 .left-column {
-    width: 45%;
+    width: 47%;
 }
 
 .right-column {
-    width: 50%;
+    width: 53%;
+    font-size: 1.5rem;
 }
 
-.clock-section, .info-section, .right-column {
-    background-color: #FFFFFF;
-    padding: 24px;
-    border-radius: 28px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+/* ==========================================================================
+   4. 顶部应用栏 (Top App Bar)
+   ========================================================================== */
+.top-btn-group {
+    position: fixed;
+    top: 16px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1200;
+}
+
+/* 顶部按钮 — MD3 色调按钮 (Tonal Button) */
+.top-btn-group button,
+#fullscreen-btn,
+#settings-btn {
+    height: 40px;
+    padding: 10px 16px;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+    border: none;
+    border-radius: var(--md-sys-shape-full);
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+    cursor: pointer;
+    box-shadow: var(--md-sys-elevation-1);
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.top-btn-group button:hover,
+#fullscreen-btn:hover,
+#settings-btn:hover {
+    background-image: linear-gradient(var(--md-state-hover), var(--md-state-hover));
+    transform: translateY(-1px);
+    box-shadow: var(--md-sys-elevation-2);
+}
+
+.top-btn-group button:active,
+#fullscreen-btn:active,
+#settings-btn:active {
+    background-image: linear-gradient(var(--md-state-active), var(--md-state-active));
+    transform: translateY(0);
+}
+
+/* 返回按钮 — MD3 描边按钮 (Outlined Button) */
+#return-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    height: 40px;
+    padding: 10px 16px;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+    cursor: pointer;
+    background-color: transparent;
+    color: var(--md-sys-color-primary);
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--md-sys-shape-full);
+    transition: all 0.2s ease;
+    z-index: 1001;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#return-btn:hover {
+    background-color: var(--md-sys-color-primary-container);
+    border-color: var(--md-sys-color-primary);
+    transform: translateY(-1px);
+}
+
+/* 时间同步状态 — MD3 辅助填充徽章 (Assist Chip) */
+#TimeAPI-status {
+    color: var(--md-sys-color-on-surface-variant);
+    background-color: var(--md-sys-color-surface-container);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    padding: 8px 12px;
+    border-radius: var(--md-sys-shape-full);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   5. 按钮体系 (Buttons)
+   ========================================================================== */
+/* 通用按钮规格 */
+button {
+    font-family: inherit;
+}
+
+/* 图标按钮 (Icon Button) — 设置/信息切换 */
+.info-toggle-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 44px;
+    height: 44px;
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+    border: none;
+    border-radius: var(--md-sys-shape-full);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 2;
+}
+
+.info-toggle-btn:hover {
+    background-image: linear-gradient(var(--md-state-hover), var(--md-state-hover));
+    transform: translateY(-1px);
+    box-shadow: var(--md-sys-elevation-1);
+}
+
+/* 确认按钮 — MD3 填充按钮 (Filled Button) */
+#save-settings-btn {
+    height: 40px;
+    padding: 0 24px;
+    border-radius: var(--md-sys-shape-full);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--md-sys-color-on-primary);
+    background-color: var(--md-sys-color-primary);
+    box-shadow: var(--md-sys-elevation-1);
+    transition: all 0.2s ease;
+}
+
+#save-settings-btn::before {
+    content: "✓";
+    font-size: 0.95rem;
+}
+
+/* 关闭按钮 — MD3 色调按钮 (Tonal Button) */
+#close-settings-btn {
+    height: 40px;
+    padding: 0 24px;
+    border-radius: var(--md-sys-shape-full);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--md-sys-color-on-secondary-container);
+    background-color: var(--md-sys-color-secondary-container);
+    transition: all 0.2s ease;
+}
+
+#close-settings-btn::before {
+    content: "✕";
+    font-size: 0.95rem;
+}
+
+#save-settings-btn:hover,
+#close-settings-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--md-sys-elevation-2);
+}
+
+#save-settings-btn:hover {
+    background-image: linear-gradient(var(--md-state-hover), var(--md-state-hover));
+}
+
+#close-settings-btn:hover {
+    background-image: linear-gradient(var(--md-state-hover), var(--md-state-hover));
+}
+
+/* 配置操作按钮 — MD3 色调按钮 (Tonal Button) */
+.config-control-btn {
+    margin-top: 14px;
+    height: 40px;
+    padding: 0 16px;
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+    border: none;
+    border-radius: var(--md-sys-shape-full);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.config-control-btn:hover {
+    background-image: linear-gradient(var(--md-state-hover), var(--md-state-hover));
+    transform: translateY(-1px);
+    box-shadow: var(--md-sys-elevation-1);
+}
+
+/* 数量增减按钮 — 小尺寸图标按钮 */
+.count-btn {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: var(--md-sys-shape-full);
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.count-btn:hover {
+    background-image: linear-gradient(var(--md-state-hover), var(--md-state-hover));
+}
+
+.count-btn .material-symbols-outlined {
+    font-size: 16px;
+}
+
+/* ==========================================================================
+   6. 排版 (Typography)
+   ========================================================================== */
+h1 {
+    font-size: 2.9rem;
+    font-weight: 600;
+    text-align: left;
+    margin-bottom: 12px;
+    color: var(--md-sys-color-on-surface);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    letter-spacing: 0.2px;
+}
+
+#room {
+    font-size: 2.3rem;
+    font-weight: 500;
+    color: var(--md-sys-color-primary);
+    margin-left: 16px;
+}
+
+#message {
+    font-size: 1.2rem;
+    color: var(--md-sys-color-on-surface-variant);
+    margin-bottom: 22px;
+}
+
+/* ==========================================================================
+   7. 卡片 (Cards)
+   ========================================================================== */
+.clock-section,
+.info-section,
+.right-column {
+    background-color: var(--md-sys-color-surface-container-low);
+    padding: 22px 24px;
+    border-radius: var(--md-sys-shape-large);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    box-shadow: var(--md-sys-elevation-1);
 }
 
 .info-section {
     position: relative;
 }
 
+/* ==========================================================================
+   8. 时钟与信息区 (Clock / Info)
+   ========================================================================== */
 #current-time {
-    font-size: 8rem;
+    font-size: 7.2rem;
     text-align: center;
-    color: #1976D2;
+    color: var(--md-sys-color-on-surface);
     margin: 0;
-    font-weight: 400;
+    font-weight: 500;
+    letter-spacing: 0.02em;
 }
 
-#current-subject, #exam-timing, #remaining-time, #status {
-    font-size: 3rem;
-    margin: 16px 0;
+#current-subject,
+#exam-timing,
+#remaining-time,
+#status {
+    font-size: 1.7rem;
+    margin: 12px 0;
     text-align: left;
-    color: #0D47A1;
+    color: var(--md-sys-color-on-surface);
 }
 
-#paper-info {
-    font-size: 3rem;
-    margin: 16px 0;
-    text-align: left;
-    color: #0D47A1;
-}
-
-#exam-papers, #answer-sheets {
-    margin: 10px 0;
-}
-
+/* ==========================================================================
+   9. 表格与状态徽章 (Table / Status Chips)
+   ========================================================================== */
 table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    margin-top: 24px;
-    background-color: #FFFFFF;
-    border-radius: 16px;
+    margin-top: 8px;
+    background-color: var(--md-sys-color-surface-container-low);
+    border-radius: var(--md-sys-shape-large);
     overflow: hidden;
+    border: 1px solid var(--md-sys-color-outline-variant);
+    box-shadow: var(--md-sys-elevation-1);
 }
 
-th, td {
-    padding: 1px;
-    font-size: 1.8rem;
+th,
+td {
+    padding: 10px 8px;
+    font-size: 1.05rem;
     text-align: center;
-    border-bottom: 1px solid #BBDEFB;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+tr:last-child td {
+    border-bottom: none;
 }
 
 th {
-    background-color: #BBDEFB;
-    color: #0D47A1;
-    font-weight: 500;
+    background-color: var(--md-sys-color-surface-container-high);
+    color: var(--md-sys-color-on-surface);
+    font-weight: 600;
+    position: sticky;
+    top: 0;
 }
 
 tr:hover {
-    background-color: #E3F2FD;
+    background-color: var(--md-sys-color-surface-container);
 }
 
-.exam-status-tag {
-    padding: 2px 4px;
-    border-radius: 3px;
+.right-column th,
+.right-column td,
+.right-column label,
+.right-column input {
+    font-size: 1.65rem;
+}
+
+.right-column span {
     font-size: 1.2rem;
-    font-weight: 500;
+}
+
+/* 状态徽章 (Status Chips) */
+.exam-status-tag {
+    padding: 6px 10px;
+    border-radius: var(--md-sys-shape-full);
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: inline-block;
 }
 
 .exam-status-进行中 {
-    background-color: #B3E5FC;
-    color: #01579B;
+    background-color: var(--md-status-ongoing-container);
+    color: var(--md-status-ongoing);
 }
 
 .exam-status-即将开始 {
-    background-color: #E1F5FE;
-    color: #0277BD;
+    background-color: var(--md-status-upcoming-container);
+    color: var(--md-status-upcoming);
 }
 
 .exam-status-已结束 {
-    background-color: #B0BEC5;
-    color: #263238;
+    background-color: var(--md-status-finished-container);
+    color: var(--md-status-finished);
 }
 
 .exam-status-未开始 {
-    background-color: #E3F2FD;
-    color: #0D47A1;
+    background-color: var(--md-status-notstarted-container);
+    color: var(--md-status-notstarted);
 }
 
+/* ==========================================================================
+   10. 数量控制面板 (Paper Count Panel)
+   ========================================================================== */
+.paper-count-container {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 1200;
+    background-color: var(--md-sys-color-surface-container-lowest);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-large);
+    box-shadow: var(--md-sys-elevation-2);
+    padding: 18px;
+    min-width: 320px;
+    max-width: 95vw;
+}
+
+.paper-input-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0;
+    font-size: 1.1rem;
+    color: var(--md-sys-color-on-surface);
+}
+
+.count-control {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.count-btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-right: 6px;
+}
+
+.count-control input {
+    width: 60px;
+    padding: 5px;
+    font-size: 1rem;
+    text-align: center;
+    background-color: var(--md-sys-color-surface-variant);
+    color: var(--md-sys-color-on-surface);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-extra-small);
+}
+
+/* ==========================================================================
+   11. 设置对话框 (Settings Dialog)
+   ========================================================================== */
 #settings-modal {
     display: none;
     position: fixed;
-    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(33, 150, 243, 0.15);
-    backdrop-filter: blur(8px);
+    z-index: 2000;
+    background-color: var(--md-sys-color-scrim);
+    backdrop-filter: blur(10px);
 }
 
 #settings-modal-content {
-    background: #FFFFFF;
-    padding: 32px 48px 32px 32px;
+    background-color: var(--md-sys-color-surface-container-lowest);
+    padding: 24px 28px;
     margin: 32px auto;
-    border-radius: 28px;
-    width: 600px;
-    max-height: 60vh;
+    border-radius: var(--md-sys-shape-extra-large);
+    width: min(640px, 92vw);
+    max-height: 76vh;
     overflow-y: auto;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    box-shadow: var(--md-sys-elevation-3);
 }
 
 #settings-modal-content::-webkit-scrollbar {
     width: 8px;
 }
 
-#settings-modal-content::-webkit-scrollbar-track {
-    background: transparent;
-    margin: 4px;
-}
-
 #settings-modal-content::-webkit-scrollbar-thumb {
-    background: #BBDEFB;
-    border-radius: 8px;
-    border: 2px solid #FFFFFF;
-}
-
-#settings-modal-content::-webkit-scrollbar-thumb:hover {
-    background: #90CAF9;
+    background-color: var(--md-sys-color-primary-container);
+    border-radius: var(--md-sys-shape-full);
 }
 
 #settings-modal-content h3 {
-    margin: 0 0 24px;
-    color: #0D47A1;
-    font-size: 24px;
-    font-weight: 400;
+    margin: 0 0 18px;
+    color: var(--md-sys-color-on-surface);
+    font-size: 1.35rem;
+    font-weight: 600;
 }
 
 #settings-modal-content label {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin: 16px 0;
-    font-size: 16px;
-    color: #0D47A1;
+    gap: 12px;
+    margin: 12px 0;
+    font-size: 0.95rem;
+    color: var(--md-sys-color-on-surface-variant);
 }
 
+/* MD3 填充式文本框 (Filled Text Field) */
 #settings-modal-content input[type="number"],
 #settings-modal-content input[type="text"] {
-    font-size: 1.8rem;
+    font-size: 1rem;
     padding: 12px 16px;
-    margin: 8px 0 24px;
+    margin: 4px 0 12px;
     width: 100%;
     box-sizing: border-box;
-    border: 2px solid #BBDEFB;
-    border-radius: 12px;
-    background-color: #FFFFFF;
-    color: #0D47A1;
-    transition: all 0.2s ease;
+    border: none;
+    border-radius: var(--md-sys-shape-extra-small);
+    background-color: var(--md-sys-color-surface-variant);
+    color: var(--md-sys-color-on-surface);
+    box-shadow: inset 0 -2px 0 0 var(--md-sys-color-outline);
+    transition: box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 #settings-modal-content input:focus {
     outline: none;
-    border-color: #1976D2;
-    background-color: #E3F2FD;
+    background-color: var(--md-sys-color-surface-variant);
+    box-shadow: inset 0 -2px 0 0 var(--md-sys-color-primary);
 }
 
+/* 按钮组底部 */
 .button-group {
     display: flex;
     justify-content: flex-end;
-    gap: 16px;
-    margin-top: 32px;
-    position: relative;
-    background-color: #FFFFFF;
-    padding: 16px 0;
-    border-top: 1px solid #BBDEFB;
+    gap: 12px;
+    margin-top: 22px;
+    padding: 12px 0 0;
+    border-top: 1px solid var(--md-sys-color-outline-variant);
 }
 
-#save-settings-btn, #close-settings-btn {
+/* 配置文件区域 */
+.config-file-container {
+    margin: 18px 0;
+    padding: 16px;
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-medium);
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+.config-file-container input[type="file"] {
+    max-width: 100%;
+    width: auto;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px dashed var(--md-sys-color-outline);
+    border-radius: var(--md-sys-shape-extra-small);
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    cursor: pointer;
+}
+
+.config-file-container input[type="file"]::-webkit-file-upload-button {
+    padding: 8px 14px;
+    margin-right: 10px;
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+    border: none;
+    border-radius: var(--md-sys-shape-full);
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.file-hint {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 1.5;
+}
+
+/* 主题设置区 */
+.theme-toggle-container {
+    margin: 18px 0;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 12px;
 }
 
-#save-settings-btn::before {
-    content: "✓";
-    font-size: 18px;
-}
-
-#close-settings-btn::before {
-    content: "✕";
-    font-size: 18px;
-}
-
-#save-settings-btn, #close-settings-btn {
-    padding: 12px 24px;
-    border-radius: 20px;
-    font-size: 16px;
-    font-weight: 500;
-    border: none;
+/* MD3 描边式下拉框 (Outlined Select) */
+#theme-select {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--md-sys-shape-extra-small);
     cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: var(--md-select-arrow);
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 14px;
 }
 
-#save-settings-btn {
-    background-color: #1976D2;
-    color: #FFFFFF;
+#theme-select:focus {
+    outline: none;
+    border-color: var(--md-sys-color-primary);
+    box-shadow: 0 0 0 3px var(--md-sys-color-primary-container);
 }
 
-#close-settings-btn {
-    background-color: #E3F2FD;
-    color: #0D47A1;
+#theme-select option {
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    padding: 8px;
 }
 
-#save-settings-btn:hover, #close-settings-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+#theme-select option:hover,
+#theme-select option:focus {
+    background-color: var(--md-sys-color-primary-container);
 }
 
-.error-container {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #B3E5FC;
-    color: #01579B;
-    padding: 16px 24px;
-    border-radius: 16px;
-    display: none;
-    z-index: 10001;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    animation: slideUp 0.3s ease;
-}
-
+/* ==========================================================================
+   12. 切换开关 (Switch) — MD3 规格 52×32
+   ========================================================================== */
 .switch {
     position: relative;
     display: inline-block;
@@ -390,9 +800,10 @@ tr:hover {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #BBDEFB;
+    background-color: var(--md-sys-color-surface-container-highest);
+    box-shadow: inset 0 0 0 2px var(--md-sys-color-outline);
     transition: .3s;
-    border-radius: 16px;
+    border-radius: var(--md-sys-shape-full);
 }
 
 .slider:before {
@@ -402,180 +813,38 @@ tr:hover {
     width: 24px;
     left: 4px;
     bottom: 4px;
-    background-color: #FFFFFF;
+    background-color: var(--md-sys-color-on-surface-variant);
     transition: .3s;
     border-radius: 50%;
 }
 
 input:checked + .slider {
-    background-color: #1976D2;
+    background-color: var(--md-sys-color-primary);
+    box-shadow: none;
 }
 
 input:checked + .slider:before {
     transform: translateX(20px);
-    background-color: #FFFFFF;
+    background-color: var(--md-sys-color-on-primary);
 }
 
-.config-file-container {
-    margin: 24px 0;
-    padding: 24px;
-    border: 2px solid #BBDEFB;
-    border-radius: 20px;
-    background-color: #F0F7FF;
-    transition: all 0.2s ease;
-}
-
-.config-file-container:hover {
-    border-color: #1976D2;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.config-file-container input[type="file"] {
-    max-width: 100%;
-    width: auto;
-    box-sizing: border-box;
-    padding: 12px;
-    border: 2px dashed #BBDEFB;
-    border-radius: 16px;
-    background-color: #FFFFFF;
-    color: #0D47A1;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.config-file-container input[type="file"]::-webkit-file-upload-button {
-    padding: 8px 16px;
-    margin-right: 12px;
-    background-color: #E3F2FD;
-    color: #0D47A1;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.config-file-container input[type="file"]::-webkit-file-upload-button:hover {
-    background-color: #90CAF9;
-}
-
-.file-hint {
-    margin-top: 12px;
-    font-size: 14px;
-    color: #1976D2;
-    line-height: 1.5;
-}
-
-.config-control-btn {
-    margin-top: 20px;
-    padding: 12px 28px;
-    background-color: #E3F2FD;
-    color: #0D47A1;
-    border: none;
-    border-radius: 24px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.config-control-btn:hover {
-    background-color: #90CAF9;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-
-/* 导出按钮样式 */
-#export-config-btn {
-    margin-top: 12px;
-    padding: 12px 28px;
-    background-color: #E3F2FD;
-    color: #0D47A1;
-    border: none;
-    border-radius: 24px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#export-config-btn:hover {
-    background-color: #90CAF9;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-
-.theme-toggle-container {
-    margin: 24px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-#theme-select {
-    width: 100%;
-    padding: 12px 16px;
-    font-size: 1.2rem;
-    background-color: #FFFFFF;
-    color: #111827;
-    border: 2px solid #BBDEFB;
-    border-radius: 12px;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='blue' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 16px center;
-    background-size: 16px;
-}
-
-#theme-select:hover {
-    background-color: #E3F2FD;
-    border-color: #90CAF9;
-}
-
-#theme-select:focus {
-    outline: none;
-    border-color: #1976D2;
-    background-color: #E3F2FD;
-}
-
-#theme-select option {
-    background-color: #FFFFFF;
-    color: #111827;
-    padding: 12px;
-}
-
-#theme-select option:hover,
-#theme-select option:focus {
-    background-color: #E3F2FD;
-}
-
-.theme-toggle-container label {
-    font-size: 16px;
-    color: #0D47A1;
-    margin-bottom: 8px;
-}
-
+/* ==========================================================================
+   13. 提醒浮层 (Reminder Overlay)
+   ========================================================================== */
 .reminder-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(227, 242, 253, 0.95);
+    background-color: var(--md-sys-color-scrim);
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
     visibility: hidden;
     transition: all 0.5s ease;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(10px);
     z-index: 9999;
 }
 
@@ -590,129 +859,42 @@ input:checked + .slider:before {
 }
 
 .reminder-title {
-    font-size: 5rem;
-    color: #1976D2;
-    margin-bottom: 2rem;
+    font-size: 3.5rem;
+    color: var(--md-sys-color-error);
+    margin-bottom: 1rem;
+    display: block;
 }
 
 .reminder-subtitle {
-    font-size: 3rem;
-    color: #039BE5;
+    font-size: 1.8rem;
+    color: var(--md-sys-color-tertiary);
 }
 
-.info-toggle-btn {
-    position: absolute;
-    right: 0;
-    top: 0;
-    background-color: #E3F2FD;
-    color: #0D47A1;
-    border: none;
-    border-radius: 50%;
-    width: 48px;
-    height: 48px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    z-index: 2;
-}
-
-.info-toggle-btn:hover {
-    background-color: #90CAF9;
-    transform: translateY(-1px);
-}
-
-.info-toggle-btn .material-icons {
-    font-size: 24px;
-}
-
-.paper-count-container {
+/* ==========================================================================
+   14. 错误提示 (Error Toast)
+   ========================================================================== */
+.error-container {
     position: fixed;
-    right: 32px;
-    bottom: 32px;
-    z-index: 1200;
-    background: #fff;
-    border: 2px solid #BBDEFB;
-    border-radius: 20px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-    padding: 24px;
-    min-width: 340px;
-    max-width: 95vw;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--md-sys-color-error-container);
+    color: var(--md-sys-color-on-error-container);
+    padding: 14px 18px;
+    border-radius: var(--md-sys-shape-large);
+    display: none;
+    z-index: 10001;
+    box-shadow: var(--md-sys-elevation-2);
+    animation: slideUp 0.3s ease;
 }
 
-
-
-@media (max-width: 700px) {
-    .paper-count-container {
-        right: 8px;
-        bottom: 8px;
-        padding: 8px;
-        min-width: 220px;
-    }
-}
-
-.paper-input-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 10px 0;
-    font-size: 2.5rem;
-}
-
-.count-control {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.count-btn-group {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    margin-right: 8px;
-}
-
-.count-btn {
-    width: 24px;
-    height: 24px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    border-radius: 50%;
-    background-color: #E3F2FD;
-    color: #0D47A1;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.count-btn:hover {
-    background-color: #90CAF9;
-    transform: translateY(-1px);
-}
-
-.count-btn .material-icons,
-.count-btn .material-symbols-outlined {
-    font-size: 16px;
-}
-
-.count-control input {
-    width: 60px;
-    padding: 5px;
-    font-size: 2rem;
-    text-align: center;
-    background-color: #FFFFFF;
-    color: #0D47A1;
-    border: 2px solid #BBDEFB;
-    border-radius: 8px;
-}
-
+/* ==========================================================================
+   15. 动画 (Animations)
+   ========================================================================== */
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(-16px);
     }
     to {
         opacity: 1;
@@ -720,215 +902,74 @@ input:checked + .slider:before {
     }
 }
 
-/* 优化提醒设置弹窗样式 */
-#reminder-modal.settings-modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(33, 150, 243, 0.15);
-    backdrop-filter: blur(8px);
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 16px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
 }
 
-#reminder-modal-content.settings-panel {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 800px;
-    max-width: 95vw;
-    max-height: 80vh;
-    overflow-y: auto;
-    background: #fff;
-    border-radius: 28px;
-    box-shadow: 0 8px 24px rgba(33,150,243,0.18);
-    padding: 32px 48px 32px 32px;
+@keyframes modalFadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
 
-#reminder-modal-content.settings-panel h3 {
-    margin-top: 0;
-    margin-bottom: 24px;
-    font-size: 24px;
-    font-weight: 400;
-    color: #0D47A1;
+#settings-modal.fade-out {
+    animation: modalFadeOut 0.3s ease forwards;
 }
 
-.reminder-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    margin-bottom: 24px;
-    background: #fff;
-    border-radius: 16px;
-    overflow: hidden;
-    table-layout: fixed;
+/* ==========================================================================
+   16. 响应式 (Responsive)
+   ========================================================================== */
+@media (max-width: 900px) {
+    .content {
+        flex-direction: column;
+    }
+
+    .left-column,
+    .right-column {
+        width: 100%;
+    }
 }
 
-.reminder-table th, .reminder-table td {
-    padding: 16px 8px;
-    font-size: 1.4rem;
-    text-align: center;
-    border-bottom: 1px solid #BBDEFB;
-    vertical-align: middle;
-    word-break: break-all;
-}
+@media (max-width: 700px) {
+    body {
+        padding: 16px 12px 24px;
+    }
 
-.reminder-table th {
-    background: #BBDEFB;
-    color: #0D47A1;
-    font-weight: 500;
-}
+    .container {
+        max-width: 100%;
+        padding: 20px 16px;
+    }
 
-.reminder-table tr:last-child td {
-    border-bottom: none;
-}
+    .paper-count-container {
+        right: 8px;
+        bottom: 8px;
+        padding: 12px;
+        min-width: 220px;
+    }
 
-.reminder-table th:nth-child(1),
-.reminder-table td:nth-child(1) {
-    width: 50%;
-    text-align: left;
-    padding-left: 20px;
-}
-.reminder-table th:nth-child(2),
-.reminder-table td:nth-child(2) {
-    width: 15%;
-}
-.reminder-table th:nth-child(3),
-.reminder-table td:nth-child(3) {
-    width: 25%;
-}
-.reminder-table th:nth-child(4),
-.reminder-table td:nth-child(4) {
-    width: 10%;
-}
+    #current-time {
+        font-size: 4.2rem;
+    }
 
-.reminder-table .action-btn {
-    padding: 8px 18px;
-    border-radius: 16px;
-    background: #E3F2FD;
-    color: #0D47A1;
-    border: none;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background 0.2s;
-    margin: 0 auto;
-    display: block;
-}
+    h1 {
+        font-size: 1.8rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
 
-.reminder-table .action-btn:hover {
-    background: #90CAF9;
-}
-
-#reminder-modal-content .button-group {
-    background: #fff;
-    border-top: 1px solid #BBDEFB;
-    margin-top: 32px;
-    padding: 16px 0 0 0;
-    display: flex;
-    justify-content: flex-end;
-    gap: 16px;
-    border-radius: 0 0 28px 28px;
-}
-
-.reminder-btn {
-    padding: 8px 18px;
-    border-radius: 16px;
-    background: #B3E5FC;
-    color: #01579B;
-    border: none;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background 0.2s;
-    margin: 0 auto;
-    display: block;
-}
-
-.reminder-btn:hover {
-    background: #81D4FA;
-}
-
-.reminder-select {
-    width: 100%;
-    padding: 8px 12px;
-    font-size: 1.1rem;
-    border: 2px solid #BBDEFB;
-    border-radius: 10px;
-    background: #fff;
-    color: #0D47A1;
-    transition: border-color 0.2s;
-    outline: none;
-}
-
-.reminder-select:focus {
-    border-color: #1976D2;
-}
-
-.reminder-time-input {
-    width: 80px;
-    padding: 8px 12px;
-    font-size: 1.1rem;
-    border: 2px solid #BBDEFB;
-    border-radius: 10px;
-    background: #fff;
-    color: #0D47A1;
-    transition: border-color 0.2s;
-    outline: none;
-    text-align: center;
-}
-
-.reminder-time-input:focus {
-    border-color: #1976D2;
-}
-
-.reminder-btn-group,
-#reminder-modal-content .button-group {
-    display: flex;
-    justify-content: flex-end;
-    gap: 16px;
-    margin-top: 32px;
-    background: #fff;
-    border-top: 1px solid #BBDEFB;
-    padding: 16px 0 0 0;
-    border-radius: 0 0 28px 28px;
-}
-
-#save-reminder-btn, #close-reminder-btn, #stop-audio-btn {
-    padding: 12px 24px;
-    border-radius: 20px;
-    font-size: 16px;
-    font-weight: 500;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-#save-reminder-btn {
-    background-color: #1976D2;
-    color: #fff;
-}
-
-#close-reminder-btn {
-    background-color: #E3F2FD;
-    color: #0D47A1;
-}
-
-#stop-audio-btn {
-    background-color: #B3E5FC;
-    color: #01579B;
-}
-
-#save-reminder-btn:hover, #close-reminder-btn:hover, #stop-audio-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-
-#stop-audio-btn:hover {
-    background-color: #81D4FA;
-    color: #01579B;
+    #settings-modal-content {
+        width: 95vw;
+        padding: 16px;
+    }
 }

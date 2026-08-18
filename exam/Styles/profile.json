@@ -5,16 +5,12 @@
             "path": "ealg"
         },
         {
-            "name": "ExamSchedule旧版",
+            "name": "ExamAware旧版",
             "path": "old"
         },
         {
             "name": "Material Design 3",
             "path": "md3"
-        },
-        {
-            "name": "Material Design 2",
-            "path": "md2"
         }
     ]
 }

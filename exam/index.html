@@ -5,7 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exam Schedule</title>
     <link id="theme-link" rel="stylesheet" href="Styles/ealg/dark.css">
-    <link rel="stylesheet" href="../assets/fonts/fonts.css">
+    <script>
+        /* 仅在"启用测试字体"开关开启时加载自定义字体 */
+        (function () {
+            try {
+                if (localStorage.getItem('enableTestFont') === 'true') {
+                    var l = document.createElement('link');
+                    l.rel = 'stylesheet';
+                    l.href = '../assets/fonts/fonts.css';
+                    document.head.appendChild(l);
+                    document.documentElement.className += ' test-font-enabled';
+                }
+            } catch (e) { }
+        })();
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -157,6 +170,11 @@
                 <label for="auto-toggle">自动切换显示:</label>
                 <label class="switch">
                     <input type="checkbox" id="auto-toggle">
+                    <span class="slider round"></span>
+                </label>
+                <label for="test-font-toggle">启用测试字体:</label>
+                <label class="switch">
+                    <input type="checkbox" id="test-font-toggle">
                     <span class="slider round"></span>
                 </label>
             </div>

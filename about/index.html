@@ -4,13 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>关于 ExamSchedule</title>
-    <link rel="stylesheet" href="../assets/fonts/fonts.css">
+    <script>
+        /* 仅在"启用测试字体"开关开启时加载自定义字体 */
+        (function () {
+            try {
+                if (localStorage.getItem('enableTestFont') === 'true') {
+                    var l = document.createElement('link');
+                    l.rel = 'stylesheet';
+                    l.href = '../assets/fonts/fonts.css';
+                    document.head.appendChild(l);
+                    document.documentElement.className += ' test-font-enabled';
+                }
+            } catch (e) { }
+        })();
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <style>
         body {
             background: #121212;
             margin: 0;
-            font-family: 'HarmonyOS Sans SC', sans-serif;
+            font-family: 'Segoe UI', 'Google Sans', 'Roboto', sans-serif;
             color: #e3f2fd;
             padding: 40px;
             line-height: 1.6;

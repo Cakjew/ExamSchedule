@@ -1,9 +1,24 @@
-/* 共享字体定义：HarmonyOS Sans SC（本地字体，WOFF2 优先） */
+/* 共享字体定义：仅在"启用测试字体"开关开启时由页面动态加载 */
+
+/* Comfortaa（英文/数字，可变字体 wght 300-700） */
+@font-face {
+    font-family: 'Comfortaa';
+    src: url('Comfortaa-Variable.woff2') format('woff2');
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* HarmonyOS Sans SC（中文） */
 @font-face {
     font-family: 'HarmonyOS Sans SC';
-    src: url('HarmonyOS_Sans_SC_Regular.woff2') format('woff2'),
-         url('HarmonyOS_Sans_SC_Regular.ttf') format('truetype');
+    src: url('HarmonyOS_Sans_SC_Regular.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
+}
+
+/* 开关开启时，html 带有 .test-font-enabled 类：英文用 Comfortaa，中文用 HarmonyOS Sans SC */
+html.test-font-enabled body {
+    font-family: 'Comfortaa', 'HarmonyOS Sans SC', sans-serif;
 }

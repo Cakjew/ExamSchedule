@@ -29,7 +29,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>当前时间</title>
 	<link rel="shortcut icon" href="../favicon.ico">
-	<link rel="stylesheet" href="../assets/fonts/fonts.css">
+	<script>
+		/* 仅在"启用测试字体"开关开启时加载自定义字体 */
+		(function () {
+			try {
+				if (localStorage.getItem('enableTestFont') === 'true') {
+					var l = document.createElement('link');
+					l.rel = 'stylesheet';
+					l.href = '../assets/fonts/fonts.css';
+					document.head.appendChild(l);
+					document.documentElement.className += ' test-font-enabled';
+				}
+			} catch (e) { }
+		})();
+	</script>
 	<link rel="stylesheet" href="styles.css"> <!-- 引入单独的 CSS 文件 -->
 </head>
 

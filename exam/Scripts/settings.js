@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const themeSelect = document.getElementById("theme-select");
     const autoToggle = document.getElementById("auto-toggle");
     const paperCountPositionSelect = document.getElementById("paper-count-position");
+    const testFontToggle = document.getElementById("test-font-toggle");
 
     let offsetTime = getCookie("offsetTime") || 0;
     let room = getCookie("room") || "";
@@ -47,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     offsetTime = parseInt(offsetTime);
     roomElem.textContent = room;
     autoToggle.checked = isAutoToggle === "true";
+    testFontToggle.checked = localStorage.getItem("enableTestFont") === "true";
 
     // 初始化主题
     const currentThemePath = `Styles/${currentTheme}/${theme}.css`;
@@ -109,6 +111,8 @@ document.addEventListener("DOMContentLoaded", () => {
             theme = themeToggle.checked ? "light" : "dark";
             currentTheme = themeSelect.value;
             isAutoToggle = autoToggle.checked;
+
+            localStorage.setItem("enableTestFont", testFontToggle.checked ? "true" : "false");
 
             setCookie("offsetTime", offsetTime, 365);
             setCookie("room", room, 365);
@@ -219,7 +223,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 theme = themeToggle.checked ? "light" : "dark";
                 currentTheme = themeSelect.value;
                 isAutoToggle = autoToggle.checked;
-    
+
+                localStorage.setItem("enableTestFont", testFontToggle.checked ? "true" : "false");
+
                 setCookie("offsetTime", offsetTime, 365);
                 setCookie("room", room, 365);
                 setCookie("zoomLevel", zoomLevel, 365);

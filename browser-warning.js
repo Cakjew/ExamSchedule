@@ -101,10 +101,17 @@
         var fontBase = (currentScript && currentScript.src)
             ? currentScript.src.replace(/[^/]*$/, '')
             : '';
-        // 自包含 @font-face：不依赖宿主页面是否引入 assets/fonts/fonts.css（仅 WOFF2）
-        var fontFace = "@font-face{font-family:'HarmonyOS Sans SC';" +
-            "src:url('" + fontBase + "assets/fonts/HarmonyOS_Sans_SC_Regular.woff2') format('woff2');" +
-            "font-weight:400;font-style:normal;font-display:swap;}";
+        // 仅在"启用测试字体"开关开启时注入自包含 @font-face（开关关闭时页面不加载自定义字体）
+        var testFontEnabled = false;
+        try { testFontEnabled = localStorage.getItem('enableTestFont') === 'true'; } catch (e) {}
+        var fontFace = testFontEnabled
+            ? "@font-face{font-family:'HarmonyOS Sans SC';" +
+              "src:url('" + fontBase + "assets/fonts/HarmonyOS_Sans_SC_Regular.woff2') format('woff2');" +
+              "font-weight:400;font-style:normal;font-display:swap;}"
+            : '';
+        var warnFontFamily = testFontEnabled
+            ? '"HarmonyOS Sans SC", sans-serif'
+            : '"Segoe UI", "Google Sans", "Roboto", sans-serif';
         style.textContent = fontFace + '\
             .browser-warning-overlay {\
                 position: fixed;\
@@ -136,7 +143,7 @@
                 box-shadow: 0 32px 80px rgba(15, 23, 42, 0.75);\
                 padding: 32px;\
                 color: #e2e8f0;\
-                font-family: "HarmonyOS Sans SC", sans-serif;\
+                font-family: ' + warnFontFamily + ';\
                 text-align: left;\
                 transform: translateY(16px) scale(0.98);\
                 opacity: 0;\

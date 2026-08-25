@@ -7,10 +7,6 @@
         {
             "name": "ExamAware旧版",
             "path": "old"
-        },
-        {
-            "name": "Material Design 3",
-            "path": "md3"
         }
     ]
 }

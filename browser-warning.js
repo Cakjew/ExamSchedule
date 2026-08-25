@@ -94,7 +94,18 @@
 
     function createWarningOverlay() {
         var style = document.createElement('style');
-        style.textContent = '\
+        // 依据脚本自身位置推导站点资源根目录，兼容子目录页面（exam/、time/、about/）
+        // 注：IE11 不支持 document.currentScript，需回退到最后一个同步脚本
+        var currentScript = document.currentScript ||
+                            document.scripts[document.scripts.length - 1];
+        var fontBase = (currentScript && currentScript.src)
+            ? currentScript.src.replace(/[^/]*$/, '')
+            : '';
+        // 自包含 @font-face：不依赖宿主页面是否引入 assets/fonts/fonts.css（仅 WOFF2）
+        var fontFace = "@font-face{font-family:'HarmonyOS Sans SC';" +
+            "src:url('" + fontBase + "assets/fonts/HarmonyOS_Sans_SC_Regular.woff2') format('woff2');" +
+            "font-weight:400;font-style:normal;font-display:swap;}";
+        style.textContent = fontFace + '\
             .browser-warning-overlay {\
                 position: fixed;\
                 top: 0;\
@@ -125,7 +136,7 @@
                 box-shadow: 0 32px 80px rgba(15, 23, 42, 0.75);\
                 padding: 32px;\
                 color: #e2e8f0;\
-                font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;\
+                font-family: "HarmonyOS Sans SC", sans-serif;\
                 text-align: left;\
                 transform: translateY(16px) scale(0.98);\
                 opacity: 0;\

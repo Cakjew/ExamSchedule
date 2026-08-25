@@ -1,0 +1,9 @@
+/* 共享字体定义：HarmonyOS Sans SC（本地字体，WOFF2 优先） */
+@font-face {
+    font-family: 'HarmonyOS Sans SC';
+    src: url('HarmonyOS_Sans_SC_Regular.woff2') format('woff2'),
+         url('HarmonyOS_Sans_SC_Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}

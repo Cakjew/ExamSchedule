@@ -29,8 +29,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>当前时间</title>
 	<link rel="shortcut icon" href="../favicon.ico">
-	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=DM+Sans|Inter|Space+Mono|Work+Sans|Libre+Franklin&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="../assets/fonts/fonts.css">
 	<link rel="stylesheet" href="styles.css"> <!-- 引入单独的 CSS 文件 -->
 </head>
 
@@ -44,15 +43,12 @@
 
 		<div class="controls">
 			<select id="fontSelector" class="btn" onchange="changeFontFamily()">
-				<option value="Roboto">Roboto（在线）</option>
-				<option value="DM Sans">DM Sans（在线）</option>
-				<option value="Inter">Inter（在线）</option>
-				<option value="Space Mono">Space Mono（在线）</option>
-				<option value="Work Sans">Work Sans（在线）</option>
-				<option value="Libre Franklin">Libre Franklin（在线）</option>
+				<option value="HarmonyOS Sans SC">HarmonyOS Sans SC</option>
 				<option value="微软雅黑">微软雅黑</option>
 				<option value="黑体">黑体</option>
 				<option value="宋体">宋体</option>
+				<option value="楷体">楷体</option>
+				<option value="仿宋">仿宋</option>
 			</select>
 			<div class="font-size-control">
 				<input type="number" id="fontSizeInput" class="btn" value="160" min="10" max="500" step="5">

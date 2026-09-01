@@ -29,7 +29,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>当前时间</title>
 	<link rel="shortcut icon" href="../favicon.ico">
-	<script>
+<!--
+<script>
 		/* 仅在"启用测试字体"开关开启时加载自定义字体 */
 		(function () {
 			try {
@@ -43,6 +44,7 @@
 			} catch (e) { }
 		})();
 	</script>
+-->
 	<link rel="stylesheet" href="styles.css"> <!-- 引入单独的 CSS 文件 -->
 </head>
 
@@ -56,7 +58,7 @@
 
 		<div class="controls">
 			<select id="fontSelector" class="btn" onchange="changeFontFamily()">
-				<option value="HarmonyOS Sans SC">HarmonyOS Sans SC</option>
+				<option value="">默认</option>
 				<option value="微软雅黑">微软雅黑</option>
 				<option value="黑体">黑体</option>
 				<option value="宋体">宋体</option>

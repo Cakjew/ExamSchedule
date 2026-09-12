@@ -10,6 +10,7 @@ yarn.lock
 *~
 .venv
 es-c++
+electron
 
 .DS_Store
 Thumbs.db

@@ -8,6 +8,8 @@ yarn.lock
 *.swp
 *.swo
 *~
+.venv
+es-c++
 
 .DS_Store
 Thumbs.db
